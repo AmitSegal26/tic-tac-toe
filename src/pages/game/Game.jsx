@@ -178,6 +178,12 @@ const Game = () => {
           sx={{
             transition: "all 1s linear",
             backgroundColor: isGameEnd ? "#1f1f1f" : "",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "25px",
+            m: 3,
           }}
         >
           <Typography
