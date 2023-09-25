@@ -7,11 +7,14 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
+import ROUTES from "../../routes/ROUTES";
+import { useNavigate } from "react-router-dom";
 
 const Game = () => {
+  const navigate = useNavigate();
   const [turnOfX, setturnOfX] = useState(true);
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState([
@@ -32,10 +35,84 @@ const Game = () => {
     ],
   ]);
   const [start, setStart] = useState(false);
+  useEffect(() => {
+    if (checkIfWin(matrixXO)) {
+      alert("winner!" + turnOfX ? "X" : "O");
+      navigate(ROUTES.HOME);
+    }
+  }, [matrixXO]);
   const handleStart = () => {
     setStart(true);
   };
-  const checkIfWin = (matrix) => {};
+  const checkIfWin = (matrix) => {
+    if (turnOfX) {
+      //* X's turn
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (
+            matrix[i][0].value &&
+            matrix[i][0].value === matrix[i][1].value &&
+            matrix[i][1].value === matrix[i][2].value
+          ) {
+            return true;
+          } else if (
+            matrix[0][j].value &&
+            matrix[0][j].value === matrix[1][j].value &&
+            matrix[1][j].value === matrix[2][j].value
+          ) {
+            return true;
+          }
+        }
+      }
+      //TODO: diagonal 2 checks for both players
+      if (
+        matrix[0][0].value &&
+        matrix[0][0].value === matrix[1][1].value &&
+        matrix[1][1].value === matrix[2][2].value
+      ) {
+        return true;
+      } else if (
+        matrix[2][0].value &&
+        matrix[2][0].value === matrix[1][1].value &&
+        matrix[1][1].value === matrix[0][2].value
+      ) {
+        return true;
+      }
+    } else {
+      //* O's turn
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (
+            matrix[i][0].value &&
+            matrix[i][0].value === matrix[i][1].value &&
+            matrix[i][1].value === matrix[i][2].value
+          ) {
+            return true;
+          } else if (
+            matrix[0][j].value &&
+            matrix[0][j].value === matrix[1][j].value &&
+            matrix[1][j].value === matrix[2][j].value
+          ) {
+            return true;
+          }
+        }
+      }
+      //TODO: diagonal 2 checks for both players
+      if (
+        matrix[0][0].value &&
+        matrix[0][0].value === matrix[1][1].value &&
+        matrix[1][1].value === matrix[2][2].value
+      ) {
+        return true;
+      } else if (
+        matrix[2][0].value &&
+        matrix[2][0].value === matrix[1][1].value &&
+        matrix[1][1].value === matrix[0][2].value
+      ) {
+        return true;
+      }
+    }
+  };
   const clickOfCell = (e) => {
     if (!e) {
       return;

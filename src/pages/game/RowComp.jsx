@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import COLORS from "../../utils/COLORS";
 
@@ -26,7 +26,15 @@ const RowComp = ({ i, handleClickFunc, matrixValue }) => {
           component="div"
           sx={cellStyleObj}
         >
-          {matrixValue[i][j].value}
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              color: COLORS.TEXT2,
+              backgroundColor: COLORS.MAIN,
+            }}
+          >
+            {matrixValue[i][j].value}
+          </Typography>
         </Box>
       ))}
     </Box>
