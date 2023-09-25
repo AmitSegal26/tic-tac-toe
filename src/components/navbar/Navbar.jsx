@@ -1,13 +1,14 @@
 import React from "react";
 import { AppBar, Box, Toolbar, Tooltip } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
-import COLORS from "../../COLORS";
+import COLORS from "../../utils/COLORS";
 import HomeIcon from "@mui/icons-material/Home";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 // import logoImg from "../../assets/imgs/logo.png";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 const Navbar = () => {
+  const navigate = useNavigate();
   const styleObjForNavLink = ({ isActive }) => {
     return {
       transition: "all 0.5s ease-in-out",
@@ -15,6 +16,9 @@ const Navbar = () => {
       textDecoration: "none",
       backgroundColor: isActive ? COLORS.WHITE : "transparent",
     };
+  };
+  const handleLogoClick = () => {
+    navigate(ROUTES.HOME);
   };
   return (
     <Box>
@@ -49,7 +53,12 @@ const Navbar = () => {
             </NavLink>
           </Tooltip>
         </Box>
-        <Box sx={{ width: "20%" }} component="img" src={logoImg} />
+        <Box
+          sx={{ width: "20%", cursor: "pointer" }}
+          onClick={handleLogoClick}
+          component="img"
+          src={logoImg}
+        />
       </AppBar>
     </Box>
   );

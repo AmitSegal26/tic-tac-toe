@@ -1,5 +1,5 @@
 import "./App.css";
-import COLORS from "./COLORS";
+import COLORS from "./utils/COLORS";
 import Navbar from "./components/navbar/Navbar";
 import Router from "./routes/Router";
 

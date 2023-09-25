@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ROUTES from "./ROUTES";
 import Home from "../pages/Home";
-import Game from "../pages/Game";
+import Game from "../pages/game/Game";
 
 const Router = () => {
   return (

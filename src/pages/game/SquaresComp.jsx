@@ -1,16 +1,8 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import React from "react";
-import COLORS from "../../COLORS";
+import RowComp from "./RowComp";
 
-const SquaresComp = () => {
-  const cellStyleObj = {
-    width: "10vw",
-    height: "10vw",
-    border: "3px solid black",
-    transition: "all 0.1s linear",
-    ":hover": { backgroundColor: COLORS.WHITE },
-  };
-  const rowStyleObj = { width: "fit-content", display: "flex" };
+const SquaresComp = ({ handleClickFunc, matrixValue }) => {
   return (
     <Container
       maxWidth="xl"
@@ -23,21 +15,14 @@ const SquaresComp = () => {
         mb: 3,
       }}
     >
-      <Box component="div" sx={rowStyleObj}>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-      </Box>
-      <Box component="div" sx={rowStyleObj}>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-      </Box>
-      <Box component="div" sx={rowStyleObj}>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-        <Box component="div" sx={cellStyleObj}></Box>
-      </Box>
+      {[undefined, undefined, undefined].map((item, i) => (
+        <RowComp
+          key={i}
+          handleClickFunc={handleClickFunc}
+          i={i}
+          matrixValue={matrixValue}
+        />
+      ))}
     </Container>
   );
 };
