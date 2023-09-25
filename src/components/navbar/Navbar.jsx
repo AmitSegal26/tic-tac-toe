@@ -14,6 +14,7 @@ const Navbar = () => {
       transition: "all 0.5s ease-in-out",
       color: isActive ? COLORS.TEXT1 : COLORS.TEXT2,
       textDecoration: "none",
+      borderRadius: "10px",
       backgroundColor: isActive ? COLORS.WHITE : "transparent",
     };
   };

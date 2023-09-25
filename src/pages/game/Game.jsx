@@ -10,12 +10,21 @@ import {
 import React, { useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
-import ROUTES from "../../routes/ROUTES";
-import { useNavigate } from "react-router-dom";
 
 const Game = () => {
-  const navigate = useNavigate();
   const [turnOfX, setturnOfX] = useState(true);
+  const [victoryOpt, setVictoryOpt] = useState(0);
+  /*
+   *1- top row
+   *2- middle row
+   *3- bottom row
+   *4- left column
+   *5- middle column
+   *6- right column
+   *7- top-left to bottom-right diagonal line \
+   *8- bottom-left to top-right diagonal line /
+   */
+  const [isGameEnd, setIsGameEnd] = useState(false);
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState([
     [
@@ -37,80 +46,59 @@ const Game = () => {
   const [start, setStart] = useState(false);
   useEffect(() => {
     if (checkIfWin(matrixXO)) {
-      alert("winner!" + turnOfX ? "X" : "O");
-      navigate(ROUTES.HOME);
+      setIsGameEnd(true);
+      // alert(`winner! ${turnOfX ? "X" : "O"}`);
     }
   }, [matrixXO]);
   const handleStart = () => {
     setStart(true);
   };
   const checkIfWin = (matrix) => {
-    if (turnOfX) {
-      //* X's turn
-      for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-          if (
-            matrix[i][0].value &&
-            matrix[i][0].value === matrix[i][1].value &&
-            matrix[i][1].value === matrix[i][2].value
-          ) {
-            return true;
-          } else if (
-            matrix[0][j].value &&
-            matrix[0][j].value === matrix[1][j].value &&
-            matrix[1][j].value === matrix[2][j].value
-          ) {
-            return true;
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        if (
+          matrix[i][0].value &&
+          matrix[i][0].value === matrix[i][1].value &&
+          matrix[i][1].value === matrix[i][2].value
+        ) {
+          if (i === 0) {
+            setVictoryOpt(1);
+          } else if (i === 1) {
+            setVictoryOpt(2);
+          } else if (i === 2) {
+            setVictoryOpt(3);
           }
+          return true;
+        } else if (
+          matrix[0][j].value &&
+          matrix[0][j].value === matrix[1][j].value &&
+          matrix[1][j].value === matrix[2][j].value
+        ) {
+          if (j === 0) {
+            setVictoryOpt(4);
+          } else if (j === 1) {
+            setVictoryOpt(5);
+          } else if (j === 2) {
+            setVictoryOpt(6);
+          }
+          return true;
         }
       }
-      //TODO: diagonal 2 checks for both players
-      if (
-        matrix[0][0].value &&
-        matrix[0][0].value === matrix[1][1].value &&
-        matrix[1][1].value === matrix[2][2].value
-      ) {
-        return true;
-      } else if (
-        matrix[2][0].value &&
-        matrix[2][0].value === matrix[1][1].value &&
-        matrix[1][1].value === matrix[0][2].value
-      ) {
-        return true;
-      }
-    } else {
-      //* O's turn
-      for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-          if (
-            matrix[i][0].value &&
-            matrix[i][0].value === matrix[i][1].value &&
-            matrix[i][1].value === matrix[i][2].value
-          ) {
-            return true;
-          } else if (
-            matrix[0][j].value &&
-            matrix[0][j].value === matrix[1][j].value &&
-            matrix[1][j].value === matrix[2][j].value
-          ) {
-            return true;
-          }
-        }
-      }
-      //TODO: diagonal 2 checks for both players
-      if (
-        matrix[0][0].value &&
-        matrix[0][0].value === matrix[1][1].value &&
-        matrix[1][1].value === matrix[2][2].value
-      ) {
-        return true;
-      } else if (
-        matrix[2][0].value &&
-        matrix[2][0].value === matrix[1][1].value &&
-        matrix[1][1].value === matrix[0][2].value
-      ) {
-        return true;
-      }
+    }
+    if (
+      matrix[0][0].value &&
+      matrix[0][0].value === matrix[1][1].value &&
+      matrix[1][1].value === matrix[2][2].value
+    ) {
+      setVictoryOpt(7);
+      return true;
+    } else if (
+      matrix[2][0].value &&
+      matrix[2][0].value === matrix[1][1].value &&
+      matrix[1][1].value === matrix[0][2].value
+    ) {
+      setVictoryOpt(8);
+      return true;
     }
   };
   const clickOfCell = (e) => {
@@ -118,6 +106,9 @@ const Game = () => {
       return;
     }
     if (!e.target) {
+      return;
+    }
+    if (!e.target.id) {
       return;
     }
     let { id } = e.target;
@@ -182,11 +173,27 @@ const Game = () => {
         </List>
       </Box>
       {start ? (
-        <Box component="div">
-          <Typography component="h4" variant="h4">
-            {turnOfX ? "X" : "O"}'s Turn
+        <Box
+          component="div"
+          sx={{
+            transition: "all 1s linear",
+            backgroundColor: isGameEnd ? "#1f1f1f" : "",
+          }}
+        >
+          <Typography
+            component="h4"
+            variant="h4"
+            sx={{ color: isGameEnd ? "white" : COLORS.TEXT2 }}
+          >
+            {isGameEnd ? (turnOfX ? "O" : "X") : turnOfX ? "X" : "O"}'s{" "}
+            {isGameEnd ? "Victory!" : "Turn"}
           </Typography>
-          <SquaresComp handleClickFunc={clickOfCell} matrixValue={matrixXO} />
+          <SquaresComp
+            isGameEndProp={isGameEnd}
+            handleClickFunc={clickOfCell}
+            matrixValue={matrixXO}
+            victoryOptProp={victoryOpt}
+          />
         </Box>
       ) : (
         <Button

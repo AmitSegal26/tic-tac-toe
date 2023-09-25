@@ -2,7 +2,12 @@ import { Container } from "@mui/material";
 import React from "react";
 import RowComp from "./RowComp";
 
-const SquaresComp = ({ handleClickFunc, matrixValue }) => {
+const SquaresComp = ({
+  handleClickFunc,
+  matrixValue,
+  isGameEndProp,
+  victoryOptProp,
+}) => {
   return (
     <Container
       maxWidth="xl"
@@ -21,6 +26,8 @@ const SquaresComp = ({ handleClickFunc, matrixValue }) => {
           handleClickFunc={handleClickFunc}
           i={i}
           matrixValue={matrixValue}
+          isGameEndProp={isGameEndProp}
+          victoryOptProp={victoryOptProp}
         />
       ))}
     </Container>
