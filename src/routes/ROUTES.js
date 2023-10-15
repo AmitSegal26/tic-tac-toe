@@ -1,3 +1,8 @@
-const ROUTES = { HOME: "/", GAME: "/gamepage", GAMERANDOM: "/gamerandompage" };
+const ROUTES = {
+  HOME: "/",
+  GAME: "/gamepage",
+  GAMERANDOM: "/gamerandompage",
+  test: "",
+};
 
 export default ROUTES;
