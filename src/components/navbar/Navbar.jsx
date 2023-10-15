@@ -5,7 +5,7 @@ import ROUTES from "../../routes/ROUTES";
 import COLORS from "../../utils/COLORS";
 import HomeIcon from "@mui/icons-material/Home";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
-// import logoImg from "../../assets/imgs/logo.png";
+import CasinoIcon from "@mui/icons-material/Casino";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 const Navbar = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Navbar = () => {
           <Tooltip title="Game Random Mode">
             <NavLink to={ROUTES.GAMERANDOM} style={styleObjForNavLink}>
               <Toolbar>
-                <VideogameAssetIcon />
+                <CasinoIcon />
               </Toolbar>
             </NavLink>
           </Tooltip>
