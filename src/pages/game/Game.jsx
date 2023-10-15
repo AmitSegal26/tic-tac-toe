@@ -10,6 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
+import { randomBot } from "../../bot/randomBot";
+import SIGNS from "../../utils/USERSSIGNS";
 
 const Game = () => {
   const [turnOfX, setturnOfX] = useState(true);
@@ -47,9 +49,9 @@ const Game = () => {
   useEffect(() => {
     if (checkIfWin(matrixXO)) {
       setIsGameEnd(true);
-      // alert(`winner! ${turnOfX ? "X" : "O"}`);
     }
   }, [matrixXO]);
+  randomBot(matrixXO);
   const handleStart = () => {
     setStart(true);
   };
@@ -122,8 +124,8 @@ const Game = () => {
       }
       if (cell.index == id) {
         newMatrix[row][newMatrix[row].indexOf(cell)].value = turnOfX
-          ? "X"
-          : "O";
+          ? SIGNS.X
+          : SIGNS.O;
       }
     }
     setMatrixXO(newMatrix);
@@ -191,8 +193,14 @@ const Game = () => {
             variant="h4"
             sx={{ color: isGameEnd ? "white" : COLORS.TEXT2 }}
           >
-            {isGameEnd ? (turnOfX ? "O" : "X") : turnOfX ? "X" : "O"}'s{" "}
-            {isGameEnd ? "Victory!" : "Turn"}
+            {isGameEnd
+              ? turnOfX
+                ? SIGNS.O
+                : SIGNS.X
+              : turnOfX
+              ? SIGNS.X
+              : SIGNS.O}
+            's {isGameEnd ? "Victory!" : "Turn"}
           </Typography>
           <SquaresComp
             isGameEndProp={isGameEnd}

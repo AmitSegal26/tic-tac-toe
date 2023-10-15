@@ -46,6 +46,13 @@ const Navbar = () => {
               </Toolbar>
             </NavLink>
           </Tooltip>
+          <Tooltip title="Game Random Mode">
+            <NavLink to={ROUTES.GAMERANDOM} style={styleObjForNavLink}>
+              <Toolbar>
+                <VideogameAssetIcon />
+              </Toolbar>
+            </NavLink>
+          </Tooltip>
           <Tooltip title="Game">
             <NavLink to={ROUTES.GAME} style={styleObjForNavLink}>
               <Toolbar>
