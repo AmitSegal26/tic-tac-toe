@@ -81,6 +81,7 @@ const Game = () => {
         newMatrix[row][newMatrix[row].indexOf(cell)].value = SIGNS.X;
       }
     }
+    //!checking if this was the last move for the ternary condition on line 92
     for (let i = 0; i < newMatrix.length; i++) {
       for (let j = 0; j < newMatrix[i].length; j++) {
         if (newMatrix[i][j].value === "") {
