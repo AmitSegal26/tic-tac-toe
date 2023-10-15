@@ -1,20 +1,15 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
 import { randomBot } from "../../bot/randomBot";
 import SIGNS from "../../utils/USERSSIGNS";
 import { checkIfWin } from "../../functions/checkIfWin";
+import GameIntro from "../../components/navbar/GameIntro";
+import { handleReset } from "../../functions/resetGameState";
 const Game = () => {
   const [turnOfX, setTurnOfX] = useState(true);
+  const [isTie, setIsTie] = useState(false);
   const [victoryOpt, setVictoryOpt] = useState(0);
   /*
    *1- top row
@@ -49,10 +44,14 @@ const Game = () => {
   useEffect(() => {
     if (checkIfWin(matrixXO, setVictoryOpt)) {
       setIsGameEnd(true);
-    } else {
-      setTurnOfX(true);
     }
-  }, [matrixXO]);
+  }, [matrixXO, turnOfX]);
+  const rulesArr = [
+    "The game is played agains a bot, each turn the bot puts his mark in a random cell",
+    "Each player has his turn to choose, 1 choice for each player for each turn",
+    'Once a player has chosen his spot, the turn passes to the next player and there are no "go-backs"!',
+    "The goal can be as a row, a column or even a diagonal line",
+  ];
   const handleStart = () => {
     setStart(true);
   };
@@ -89,8 +88,12 @@ const Game = () => {
         }
       }
     }
+    setIsTie(isLastMove);
     setMatrixXO(isLastMove ? newMatrix : randomBot(newMatrix));
     setTurnOfX(!turnOfX);
+  };
+  const handleResetClick = () => {
+    handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
   };
   return (
     <Container
@@ -99,46 +102,21 @@ const Game = () => {
         flexDirection: start ? { xs: "column", lg: "row" } : "column",
       }}
     >
-      <Box component="div">
-        <Typography component="h1" variant="h1">
-          Welcome to the game - RANDOM MODE!
-        </Typography>
-        <Divider />
-        <Typography component="h3" variant="h2">
-          The rules are simple really:
-        </Typography>
-
-        <Divider />
-        <Typography component="h3" variant="h3">
-          The goal: to get your shape into 3 adjacent cells.
-        </Typography>
-        <hr />
-        <List
-          component="h3"
-          variant="h4"
-          sx={{ backgroundColor: COLORS.WHITE, borderRadius: "30px" }}
+      <GameIntro
+        welcomeText="Welcome to the game - RANDOM MODE!"
+        rulesArr={rulesArr}
+      />
+      {isGameEnd || isTie ? (
+        <Button
+          sx={{ p: 1, m: 2, height: "70px", alignSelf: "center" }}
+          variant="contained"
+          onClick={handleResetClick}
         >
-          <ListItem>
-            The game is played agains a bot, each turn the bot puts his mark in
-            a random cell
-          </ListItem>
-          <ListItem>
-            <b> rule no. 1:</b> Each player has his turn to choose, 1 choice for
-            each player for each turn
-          </ListItem>
-          <ListItem>
-            <b> rule no. 2:</b> Once a player has chosen his spot, the turn
-            passes to the next player and there are no "go-backs"!
-          </ListItem>
-          <ListItem>
-            <b> rule no. 3:</b> The goal can be as a row, a column or even a
-            diagonal line
-          </ListItem>
-          <ListItem>
-            <b> no. 4:</b>rule Have fun!
-          </ListItem>
-        </List>
-      </Box>
+          Reset game
+        </Button>
+      ) : (
+        ""
+      )}
       {start ? (
         <Box
           component="div"
@@ -158,14 +136,16 @@ const Game = () => {
             variant="h4"
             sx={{ color: isGameEnd ? "white" : COLORS.TEXT2 }}
           >
-            {isGameEnd
+            {isTie
+              ? "Its A Tie!"
+              : isGameEnd
               ? turnOfX
                 ? SIGNS.O
                 : SIGNS.X
               : turnOfX
               ? SIGNS.X
               : SIGNS.O}
-            's {isGameEnd ? "Victory!" : "Turn"}
+            {isTie ? "" : "'s"} {isTie ? "" : isGameEnd ? "Victory!" : "Turn"}
           </Typography>
           <SquaresComp
             isGameEndProp={isGameEnd}
@@ -176,7 +156,7 @@ const Game = () => {
         </Box>
       ) : (
         <Button
-          sx={{ p: 3, m: 2 }}
+          sx={{ p: 3, m: 2, fontSize: "2rem" }}
           color="secondary"
           variant="contained"
           onClick={handleStart}

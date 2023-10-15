@@ -6,6 +6,8 @@ import COLORS from "../../utils/COLORS";
 import HomeIcon from "@mui/icons-material/Home";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import CasinoIcon from "@mui/icons-material/Casino";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 const Navbar = () => {
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Navbar = () => {
           <Tooltip title="Game">
             <NavLink to={ROUTES.GAME} style={styleObjForNavLink}>
               <Toolbar>
-                <VideogameAssetIcon />
+                <PeopleAltIcon />
               </Toolbar>
             </NavLink>
           </Tooltip>
