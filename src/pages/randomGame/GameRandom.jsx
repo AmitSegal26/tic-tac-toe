@@ -13,9 +13,8 @@ import COLORS from "../../utils/COLORS";
 import { randomBot } from "../../bot/randomBot";
 import SIGNS from "../../utils/USERSSIGNS";
 import { checkIfWin } from "../../functions/checkIfWin";
-
 const Game = () => {
-  const [turnOfX, setturnOfX] = useState(true);
+  const [turnOfX, setTurnOfX] = useState(true);
   const [victoryOpt, setVictoryOpt] = useState(0);
   /*
    *1- top row
@@ -50,6 +49,8 @@ const Game = () => {
   useEffect(() => {
     if (checkIfWin(matrixXO, setVictoryOpt)) {
       setIsGameEnd(true);
+    } else {
+      setTurnOfX(true);
     }
   }, [matrixXO]);
   const handleStart = () => {
@@ -70,18 +71,25 @@ const Game = () => {
     const row =
       (id / 3) % 1 === 0 ? Math.floor(id / 3) - 1 : Math.floor(id / 3);
     const newMatrix = JSON.parse(JSON.stringify(matrixXO));
+    let isLastMove = true;
     for (const cell of newMatrix[row]) {
-      if (cell.value !== "" && cell.index == id) {
+      if (cell.value !== "" && cell.index === id) {
+        //? is the cell already occupied
         return;
       }
-      if (cell.index == id) {
-        newMatrix[row][newMatrix[row].indexOf(cell)].value = turnOfX
-          ? SIGNS.X
-          : SIGNS.O;
+      if (cell.index === id) {
+        newMatrix[row][newMatrix[row].indexOf(cell)].value = SIGNS.X;
       }
     }
-    setMatrixXO(newMatrix);
-    setturnOfX(!turnOfX);
+    for (let i = 0; i < newMatrix.length; i++) {
+      for (let j = 0; j < newMatrix[i].length; j++) {
+        if (newMatrix[i][j].value === "") {
+          isLastMove = false;
+        }
+      }
+    }
+    setMatrixXO(isLastMove ? newMatrix : randomBot(newMatrix));
+    setTurnOfX(!turnOfX);
   };
   return (
     <Container
@@ -92,7 +100,7 @@ const Game = () => {
     >
       <Box component="div">
         <Typography component="h1" variant="h1">
-          Welcome to the game!
+          Welcome to the game - RANDOM MODE!
         </Typography>
         <Divider />
         <Typography component="h3" variant="h2">
@@ -109,6 +117,10 @@ const Game = () => {
           variant="h4"
           sx={{ backgroundColor: COLORS.WHITE, borderRadius: "30px" }}
         >
+          <ListItem>
+            The game is played agains a bot, each turn the bot puts his mark in
+            a random cell
+          </ListItem>
           <ListItem>
             <b> rule no. 1:</b> Each player has his turn to choose, 1 choice for
             each player for each turn
@@ -168,7 +180,7 @@ const Game = () => {
           variant="contained"
           onClick={handleStart}
         >
-          START
+          START Random Mode
         </Button>
       )}
     </Container>
