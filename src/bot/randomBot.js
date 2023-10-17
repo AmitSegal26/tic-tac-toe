@@ -8,6 +8,7 @@ export const randomBot = (matrix) => {
   const max = arrOfEmptyCells.length - 1;
   let randCell = arrOfEmptyCells[getRandomIntIn(min, max)]?.index;
   let newMatrix = JSON.parse(JSON.stringify(matrix));
+  console.table(newMatrix);
   for (let row = 0; row < newMatrix.length; row++) {
     for (let cell = 0; cell < newMatrix[row].length; cell++) {
       if (newMatrix[row][cell].index === randCell) {

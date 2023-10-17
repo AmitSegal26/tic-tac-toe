@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import COLORS from "../../utils/COLORS";
 import HomeIcon from "@mui/icons-material/Home";
-import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import CasinoIcon from "@mui/icons-material/Casino";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
