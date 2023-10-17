@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
 import { randomBot } from "../../bot/randomBot";
@@ -7,7 +7,10 @@ import SIGNS from "../../utils/USERSSIGNS";
 import { checkIfWin } from "../../functions/checkIfWin";
 import GameIntro from "../../components/navbar/GameIntro";
 import { handleReset } from "../../functions/resetGameState";
+import smartBot from "../../bot/smartBot";
+import { emptyBoardMatrix } from "../../utils/emptyBoardMatrix";
 const Game = () => {
+  const [isGameRandom, setIsGameRandom] = useState(true);
   const [turnOfX, setTurnOfX] = useState(true);
   const [isTie, setIsTie] = useState(false);
   const [victoryOpt, setVictoryOpt] = useState(0);
@@ -23,38 +26,19 @@ const Game = () => {
    */
   const [isGameEnd, setIsGameEnd] = useState(false);
   //* true - is X, false - is O
-  const [matrixXO, setMatrixXO] = useState([
-    [
-      { index: 1, value: "" },
-      { index: 2, value: "" },
-      { index: 3, value: "" },
-    ],
-    [
-      { index: 4, value: "" },
-      { index: 5, value: "" },
-      { index: 6, value: "" },
-    ],
-    [
-      { index: 7, value: "" },
-      { index: 8, value: "" },
-      { index: 9, value: "" },
-    ],
-  ]);
+  const [matrixXO, setMatrixXO] = useState(emptyBoardMatrix);
   const [start, setStart] = useState(false);
   useEffect(() => {
-    if (checkIfWin(matrixXO, setVictoryOpt)) {
+    if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       setIsGameEnd(true);
     }
-  }, [matrixXO, turnOfX]);
+  }, [matrixXO, turnOfX, isTie]);
   const rulesArr = [
     "The game is played agains a bot, each turn the bot puts his mark in a random cell",
     "Each player has his turn to choose, 1 choice for each player for each turn",
     'Once a player has chosen his spot, the turn passes to the next player and there are no "go-backs"!',
     "The goal can be as a row, a column or even a diagonal line",
   ];
-  const handleStart = () => {
-    setStart(true);
-  };
   const clickOfCell = (e) => {
     if (!e) {
       return;
@@ -77,10 +61,11 @@ const Game = () => {
         return;
       }
       if (cell.index === id) {
+        console.log("her");
         newMatrix[row][newMatrix[row].indexOf(cell)].value = SIGNS.X;
       }
     }
-    //!checking if this was the last move for the ternary condition on line 92
+    //!checking if this was the last move for the ternary condition on setMatrixXO(.....)
     for (let i = 0; i < newMatrix.length; i++) {
       for (let j = 0; j < newMatrix[i].length; j++) {
         if (newMatrix[i][j].value === "") {
@@ -89,11 +74,25 @@ const Game = () => {
       }
     }
     setIsTie(isLastMove);
-    setMatrixXO(isLastMove ? newMatrix : randomBot(newMatrix));
+    setMatrixXO(
+      isLastMove
+        ? newMatrix
+        : isGameRandom
+        ? randomBot(newMatrix)
+        : smartBot(newMatrix)
+    );
     setTurnOfX(!turnOfX);
   };
   const handleResetClick = () => {
     handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
+  };
+  const setRandomMode = () => {
+    setIsGameRandom(true);
+    setStart(true);
+  };
+  const setSmartMode = () => {
+    setIsGameRandom(false);
+    setStart(true);
   };
   return (
     <Container
@@ -121,7 +120,7 @@ const Game = () => {
         <Box
           component="div"
           sx={{
-            transition: "all 1s linear",
+            transition: "background-color 1s linear",
             backgroundColor: isGameEnd ? "#1f1f1f" : "",
             display: "flex",
             flexDirection: "column",
@@ -155,14 +154,25 @@ const Game = () => {
           />
         </Box>
       ) : (
-        <Button
-          sx={{ p: 3, m: 2, fontSize: "2rem" }}
-          color="secondary"
-          variant="contained"
-          onClick={handleStart}
-        >
-          START Random Mode
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            sx={{ p: 3, m: 2, fontSize: "2rem" }}
+            color="secondary"
+            variant="contained"
+            onClick={setRandomMode}
+          >
+            START Random Mode
+          </Button>
+          <Button
+            sx={{ p: 3, m: 2, fontSize: "2rem" }}
+            color="warning"
+            variant="contained"
+            onClick={setSmartMode}
+            // disabled
+          >
+            START Smart Mode [not working yet]
+          </Button>
+        </Box>
       )}
     </Container>
   );
