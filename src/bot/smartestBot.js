@@ -3,7 +3,7 @@ import { getArrOfEmptyCells } from "./arrOfEmptyCells";
 import { randomBot } from "./randomBot";
 const handleLater = (matrix) => randomBot(matrix);
 
-const smartBot = (matrix) => {
+const smartestBot = (matrix) => {
   const arrOfEmpty = getArrOfEmptyCells(matrix);
   let newMatrix = JSON.parse(JSON.stringify(matrix));
   if (arrOfEmpty.length === 8) {
@@ -33,35 +33,8 @@ const smartBot = (matrix) => {
     //* for middle move
     if (newMatrix[1][1].value !== "") {
       // ?is middle cell move
-      let arr = [];
-      for (let i = 0; i < newMatrix.length; i += 2) {
-        for (let j = 0; j < newMatrix[i].length; j += 2) {
-          if (newMatrix[i][j].value === "") {
-            arr = [...arr, newMatrix[i][j].index];
-          }
-        }
-      }
-      const rand = Math.floor(Math.random() * (4 - 1 + 1) + 1);
-      switch (rand) {
-        case 1:
-          newMatrix[0][0].value = SIGNS.O;
-          break;
-        case 2:
-          newMatrix[0][2].value = SIGNS.O;
-          break;
-        case 3:
-          newMatrix[2][0].value = SIGNS.O;
-          break;
-        case 4:
-          newMatrix[2][2].value = SIGNS.O;
-          break;
-        default:
-          newMatrix[0][0].value = SIGNS.O;
-          break;
-      }
-      return newMatrix;
+      return handleLater(newMatrix);
     }
-    // TODO: make algorithm for border moves
   } else {
     // a move after first move
     return handleLater(newMatrix);
@@ -90,4 +63,4 @@ const smartBot = (matrix) => {
 // *solution
 //TODO }
 
-export default smartBot;
+export default smartestBot;

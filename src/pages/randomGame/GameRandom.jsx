@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SquaresComp from "./SquaresComp";
 import COLORS from "../../utils/COLORS";
@@ -9,8 +9,15 @@ import GameIntro from "../../components/navbar/GameIntro";
 import { handleReset } from "../../functions/resetGameState";
 import smartBot from "../../bot/smartBot";
 import { emptyBoardMatrix } from "../../utils/emptyBoardMatrix";
+import smartestBot from "../../bot/smartestBot";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 const Game = () => {
-  const [isGameRandom, setIsGameRandom] = useState(true);
+  const [gameMode, setGameMode] = useState(null);
+  /*
+   * 0 - random mode
+   * 1 - smart mode
+   * 2 - smartest mode
+   */
   const [turnOfX, setTurnOfX] = useState(true);
   const [isTie, setIsTie] = useState(false);
   const [victoryOpt, setVictoryOpt] = useState(0);
@@ -61,7 +68,6 @@ const Game = () => {
         return;
       }
       if (cell.index === id) {
-        console.log("her");
         newMatrix[row][newMatrix[row].indexOf(cell)].value = SIGNS.X;
       }
     }
@@ -77,9 +83,11 @@ const Game = () => {
     setMatrixXO(
       isLastMove
         ? newMatrix
-        : isGameRandom
-        ? randomBot(newMatrix)
-        : smartBot(newMatrix)
+        : gameMode === 2
+        ? smartestBot(newMatrix)
+        : gameMode === 1
+        ? smartBot(newMatrix)
+        : randomBot(newMatrix)
     );
     setTurnOfX(!turnOfX);
   };
@@ -87,13 +95,22 @@ const Game = () => {
     handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
   };
   const setRandomMode = () => {
-    setIsGameRandom(true);
+    setGameMode(0);
     setStart(true);
   };
   const setSmartMode = () => {
-    setIsGameRandom(false);
+    setGameMode(1);
     setStart(true);
   };
+  const setSmartestMode = () => {
+    setGameMode(2);
+    setStart(true);
+  };
+  const handleChangeModeClick = () => {
+    handleResetClick();
+    setStart(false);
+  };
+  const btnStyleObj = { p: 3, m: 2, fontSize: "2rem", borderRadius: "50px" };
   return (
     <Container
       sx={{
@@ -106,13 +123,13 @@ const Game = () => {
         rulesArr={rulesArr}
       />
       {isGameEnd || isTie ? (
-        <Button
-          sx={{ p: 1, m: 2, height: "70px", alignSelf: "center" }}
-          variant="contained"
-          onClick={handleResetClick}
-        >
-          Reset game
-        </Button>
+        <Box sx={{ p: 1, m: 2, height: "70px", alignSelf: "center" }}>
+          <Tooltip title="reset game">
+            <Button variant="contained" onClick={handleResetClick}>
+              <RestartAltIcon />
+            </Button>
+          </Tooltip>
+        </Box>
       ) : (
         ""
       )}
@@ -130,6 +147,16 @@ const Game = () => {
             m: 3,
           }}
         >
+          <Typography color="error" component="h4" variant="h4">
+            {gameMode === 0
+              ? "Random"
+              : gameMode === 1
+              ? "Smart Bot"
+              : gameMode === 2
+              ? "Smartest Bot"
+              : "UNKNOWN"}{" "}
+            Mode
+          </Typography>
           <Typography
             component="h4"
             variant="h4"
@@ -152,11 +179,18 @@ const Game = () => {
             matrixValue={matrixXO}
             victoryOptProp={victoryOpt}
           />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleChangeModeClick}
+          >
+            Change Game Mode
+          </Button>
         </Box>
       ) : (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Button
-            sx={{ p: 3, m: 2, fontSize: "2rem" }}
+            sx={btnStyleObj}
             color="secondary"
             variant="contained"
             onClick={setRandomMode}
@@ -164,13 +198,22 @@ const Game = () => {
             START Random Mode
           </Button>
           <Button
-            sx={{ p: 3, m: 2, fontSize: "2rem" }}
+            sx={btnStyleObj}
             color="warning"
             variant="contained"
             onClick={setSmartMode}
             // disabled
           >
-            START Smart Mode [not working yet]
+            START Smart Mode [not done yet]
+          </Button>
+          <Button
+            sx={btnStyleObj}
+            color="primary"
+            variant="contained"
+            onClick={setSmartestMode}
+            // disabled
+          >
+            START Smartest Mode [not done yet]
           </Button>
         </Box>
       )}

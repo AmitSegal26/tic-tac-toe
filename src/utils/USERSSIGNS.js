@@ -1,5 +1,5 @@
 const SIGNS = {
-  X: "P",
+  X: "X",
   O: "O",
 };
 export default SIGNS;

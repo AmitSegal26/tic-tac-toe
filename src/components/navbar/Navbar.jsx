@@ -1,15 +1,12 @@
 import React from "react";
-import { AppBar, Box, Toolbar, Tooltip } from "@mui/material";
+import { AppBar, Box, Toolbar } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import ROUTES from "../../routes/ROUTES";
 import COLORS from "../../utils/COLORS";
-import HomeIcon from "@mui/icons-material/Home";
-import CasinoIcon from "@mui/icons-material/Casino";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import logoImg from "../../assets/imgs/logoTransparent.png";
+import ROUTES from "./../../routes/ROUTES";
 const Navbar = () => {
   const navigate = useNavigate();
+  const linksArr = Object.keys(ROUTES);
   const styleObjForNavLink = ({ isActive }) => {
     return {
       transition: "all 0.5s ease-in-out",
@@ -40,27 +37,11 @@ const Navbar = () => {
             backgroundColor: COLORS.MAIN,
           }}
         >
-          <Tooltip title="Home Page">
-            <NavLink to={ROUTES.HOME} style={styleObjForNavLink}>
-              <Toolbar>
-                <HomeIcon />
-              </Toolbar>
+          {linksArr.map((link, i) => (
+            <NavLink key={link} to={ROUTES[link]} style={styleObjForNavLink}>
+              <Toolbar>{link}</Toolbar>
             </NavLink>
-          </Tooltip>
-          <Tooltip title="Game Random Mode">
-            <NavLink to={ROUTES.GAMERANDOM} style={styleObjForNavLink}>
-              <Toolbar>
-                <CasinoIcon />
-              </Toolbar>
-            </NavLink>
-          </Tooltip>
-          <Tooltip title="Game">
-            <NavLink to={ROUTES.GAME} style={styleObjForNavLink}>
-              <Toolbar>
-                <PeopleAltIcon />
-              </Toolbar>
-            </NavLink>
-          </Tooltip>
+          ))}
         </Box>
         <Box
           sx={{ width: "20%", cursor: "pointer" }}

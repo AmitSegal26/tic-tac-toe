@@ -2,6 +2,7 @@ import "./App.css";
 import COLORS from "./utils/COLORS";
 import Navbar from "./components/navbar/Navbar";
 import Router from "./routes/Router";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
       >
         <Router />
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

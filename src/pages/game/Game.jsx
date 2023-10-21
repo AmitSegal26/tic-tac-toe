@@ -56,10 +56,10 @@ const Game = () => {
     const newMatrix = JSON.parse(JSON.stringify(matrixXO));
     let isLastMove = true;
     for (const cell of newMatrix[row]) {
-      if (cell.value !== "" && cell.index == id) {
+      if (cell.value !== "" && cell.index === id) {
         return;
       }
-      if (cell.index == id) {
+      if (cell.index === id) {
         newMatrix[row][newMatrix[row].indexOf(cell)].value = turnOfX
           ? SIGNS.X
           : SIGNS.O;
