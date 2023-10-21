@@ -1,8 +1,8 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import COLORS from "../../utils/COLORS";
 import IconComponentForFooter from "./IconComponentForFooter";
-
+import myImg from "../../assets/imgs/Picture1.png";
 const Footer = () => {
   const arrOfLinks = [
     {
@@ -44,13 +44,47 @@ const Footer = () => {
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
-        backgroundColor: COLORS.MAIN,
-        border: "3px solid black",
+        backgroundColor: COLORS.BLACK,
       }}
     >
-      {arrOfLinks.map((linkObj) => (
-        <IconComponentForFooter key={linkObj.type} linkObjProp={linkObj} />
-      ))}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          sx={{ color: "white", fontSize: "2rem", letterSpacing: "0.3rem" }}
+        >
+          © Amit Segal 2023
+        </Typography>
+        <Avatar
+          src={myImg}
+          alt="author's face"
+          sx={{
+            aspectRatio: "1/1",
+            height: "100px",
+            width: "100px",
+            ml: "2rem",
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          width: "40vw",
+          p: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+        }}
+      >
+        {arrOfLinks.map((linkObj) => (
+          <IconComponentForFooter key={linkObj.type} linkObjProp={linkObj} />
+        ))}
+      </Box>
     </Box>
   );
 };

@@ -60,7 +60,6 @@ const IconComponentForFooter = ({ linkObjProp }) => {
         target="_blank"
         href={linkObjProp?.href}
         sx={{
-          border: "1px solid black",
           width: "50px",
           aspectRatio: "1/1",
           borderRadius: "50%",
@@ -71,7 +70,7 @@ const IconComponentForFooter = ({ linkObjProp }) => {
           transition: "all 0.25s ease-in-out",
           cursor: "pointer",
           ":hover": {
-            transform: "scale(1.1)",
+            transform: "scale(1.3)",
           },
           backgroundColor: pickColor(linkObjProp),
         }}
