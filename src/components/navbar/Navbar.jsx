@@ -1,10 +1,10 @@
 import React from "react";
-import { AppBar, Box, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import COLORS from "../../utils/COLORS";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 import ROUTES from "./../../routes/ROUTES";
-const Navbar = () => {
+const Navbar = ({ setIsContactPressedFunc }) => {
   const navigate = useNavigate();
   const linksArr = Object.keys(ROUTES);
   const styleObjForNavLink = ({ isActive }) => {
@@ -19,6 +19,13 @@ const Navbar = () => {
   const handleLogoClick = () => {
     navigate(ROUTES.HOME);
   };
+  const handleContactClick = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+    setIsContactPressedFunc(true);
+  };
   return (
     <Box>
       <AppBar
@@ -32,8 +39,8 @@ const Navbar = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "start",
             alignItems: "center",
+            gap: "1.5rem",
             backgroundColor: COLORS.MAIN,
           }}
         >
@@ -42,7 +49,17 @@ const Navbar = () => {
               <Toolbar>{link}</Toolbar>
             </NavLink>
           ))}
+          <Button
+            variant="outlined"
+            color="warning"
+            sx={{ fontWeight: "bold", letterSpacing: "0.1rem" }}
+            autoFocus
+            onClick={handleContactClick}
+          >
+            "Contact The Author!"
+          </Button>
         </Box>
+        {/* LOGO */}
         <Box
           sx={{ width: "20%", cursor: "pointer" }}
           onClick={handleLogoClick}

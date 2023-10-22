@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import COLORS from "../../utils/COLORS";
 import IconComponentForFooter from "./IconComponentForFooter";
 import myImg from "../../assets/imgs/Picture1.png";
-const Footer = () => {
+const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
+  const [bgColorState, setBgColorState] = useState(COLORS.BLACK);
+  useEffect(() => {
+    if (isContactPressedState) {
+      setBgColorState(COLORS.WHITE);
+      setTimeout(() => {
+        setIsContactPressedFunc(false);
+      }, 500);
+    } else {
+      setBgColorState(COLORS.BLACK);
+    }
+  }, [isContactPressedState]);
   const arrOfLinks = [
     {
       type: "gitHub",
@@ -44,7 +55,8 @@ const Footer = () => {
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
-        backgroundColor: COLORS.BLACK,
+        transition: "background-color 0.5s ease-in-out",
+        backgroundColor: bgColorState,
       }}
     >
       <Box
