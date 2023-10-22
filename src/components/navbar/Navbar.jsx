@@ -52,7 +52,11 @@ const Navbar = ({ setIsContactPressedFunc }) => {
           <Button
             variant="outlined"
             color="warning"
-            sx={{ fontWeight: "bold", letterSpacing: "0.1rem" }}
+            sx={{
+              fontWeight: "bold",
+              letterSpacing: "0.1rem",
+              bgcolor: COLORS.TEXT2,
+            }}
             autoFocus
             onClick={handleContactClick}
           >
