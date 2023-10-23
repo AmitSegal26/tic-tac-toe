@@ -14,7 +14,7 @@ const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
     } else {
       setBgColorState(COLORS.BLACK);
     }
-  }, [isContactPressedState]);
+  }, [isContactPressedState, setIsContactPressedFunc]);
   const arrOfLinks = [
     {
       type: "gitHub",

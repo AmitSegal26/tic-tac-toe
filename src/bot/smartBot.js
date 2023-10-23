@@ -65,6 +65,51 @@ const smartBot = (matrix) => {
   } else {
     // a move after first move
     // * corners scan
+    // an array with 3 indexes - pointing to the matrix array
+    const arrOfTopLeftToBottomRightDiagonalLine = [
+      newMatrix[0][0],
+      newMatrix[1][1],
+      newMatrix[2][2],
+    ];
+    const arrOfBottomLeftToTopRightDiagonalLine = [
+      newMatrix[2][0],
+      newMatrix[1][1],
+      newMatrix[0][2],
+    ];
+    // checking TopLeftToBottomRightDiagonalLine
+    let counterForX = 0;
+    let counterForO = 0;
+    for (let i = 0; i < arrOfTopLeftToBottomRightDiagonalLine.length; i++) {
+      counterForX +=
+        arrOfTopLeftToBottomRightDiagonalLine[i].value === SIGNS.X ? 1 : 0;
+      counterForO +=
+        arrOfTopLeftToBottomRightDiagonalLine[i].value === SIGNS.O ? 1 : 0;
+    }
+    if (counterForX === 2 && counterForO === 0) {
+      for (let i = 0; i < arrOfTopLeftToBottomRightDiagonalLine.length; i++) {
+        if (arrOfTopLeftToBottomRightDiagonalLine[i].value === "") {
+          arrOfTopLeftToBottomRightDiagonalLine[i].value = SIGNS.O;
+          return newMatrix;
+        }
+      }
+    }
+    // checking BottomLeftToTopRightDiagonalLine
+    counterForX = 0;
+    counterForO = 0;
+    for (let i = 0; i < arrOfBottomLeftToTopRightDiagonalLine.length; i++) {
+      counterForX +=
+        arrOfBottomLeftToTopRightDiagonalLine[i].value === SIGNS.X ? 1 : 0;
+      counterForO +=
+        arrOfBottomLeftToTopRightDiagonalLine[i].value === SIGNS.O ? 1 : 0;
+    }
+    if (counterForX === 2 && counterForO === 0) {
+      for (let i = 0; i < arrOfBottomLeftToTopRightDiagonalLine.length; i++) {
+        if (arrOfBottomLeftToTopRightDiagonalLine[i].value === "") {
+          arrOfBottomLeftToTopRightDiagonalLine[i].value = SIGNS.O;
+          return newMatrix;
+        }
+      }
+    }
     // * straight lines scan (horizontal + vertical)
     for (let i = 0; i < newMatrix.length; i++) {
       let counterForXHorizontal = 0;
@@ -96,35 +141,11 @@ const smartBot = (matrix) => {
           }
         }
       }
-      // console.log("counterForX", counterForX);
-      // console.log("counterForO", counterForO);
     }
     //TODO: make attack also not just defense
     return handleLater(newMatrix);
-    // TODO: figure out algorithm for the rest of the game
     // ?MAYBE DO A SEPERATE ALGORITHM FOR EACH MOVE? - INCLUDING CHECKING THE POSITIONS OF ENEMY / SELF POSITIONS
   }
 };
-// TODO: only first move{
-//? [[1,2,3],[4,5,6],[7,8,9]]
-//! [1*, 2, 3*, 4, 5, 6, 7*, 8, 9*];
-// senario 1 - indexes 1,3,7,9
-// *solution
-// only solution to avoid 100% winning by oponent is to respond in the middle
-// !DONE
-
-//! [1,2*,3,4*,5,6*,7,8*,9]
-// senario 2 - all even indexes of matrix{index:X}
-// *solution
-// example for concept - if 1st player put in 4 - then DONT respond with 2 or 8 (diagonalic to 4) - 100% loss
-// import exampleOne from "../assets/exampleOne.bmp";
-// example for concept -if 1st player put in 4 - then DONT respond with 6(for in row to 4) - 100% loss if 1st player then responds with 2/8
-// import exampleTwo from "../assets/exampleTwo.bmp";
-
-//! [1,2,3,4,5*,6,7,8,9]
-// senario - in middle
-// *solution
-// respond in corner
-//TODO }
 
 export default smartBot;
