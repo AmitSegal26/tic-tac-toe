@@ -65,19 +65,32 @@ const smartBot = (matrix) => {
   } else {
     // a move after first move
     // * corners scan
-    // * straight lines scan (horizontal)
-    console.table(newMatrix);
+    // * straight lines scan (horizontal + vertical)
     for (let i = 0; i < newMatrix.length; i++) {
-      let counterForX = 0;
-      let counterForO = 0;
-      // !maybe wrong algorithm for scanning the lines
+      let counterForXHorizontal = 0;
+      let counterForOHorizontal = 0;
+      let counterForXVertical = 0;
+      let counterForOVertical = 0;
       for (let j = 0; j < newMatrix[i].length; j++) {
-        counterForX += newMatrix[i][j].value === SIGNS.X ? 1 : 0;
-        counterForO += newMatrix[i][j].value === SIGNS.O ? 1 : 0;
-        if (counterForX === 2 && counterForO === 0 && j === 2) {
+        counterForXVertical += newMatrix[i][j].value === SIGNS.X ? 1 : 0;
+        counterForOVertical += newMatrix[i][j].value === SIGNS.O ? 1 : 0;
+        counterForXHorizontal += newMatrix[j][i].value === SIGNS.X ? 1 : 0;
+        counterForOHorizontal += newMatrix[j][i].value === SIGNS.O ? 1 : 0;
+        if (counterForXVertical === 2 && counterForOVertical === 0 && j === 2) {
           for (let k = 0; k < newMatrix[i].length; k++) {
             if (newMatrix[i][k].value !== SIGNS.X) {
               newMatrix[i][k].value = SIGNS.O;
+              return newMatrix;
+            }
+          }
+        } else if (
+          counterForXHorizontal === 2 &&
+          counterForOHorizontal === 0 &&
+          j === 2
+        ) {
+          for (let k = 0; k < newMatrix[i].length; k++) {
+            if (newMatrix[k][i].value !== SIGNS.X) {
+              newMatrix[k][i].value = SIGNS.O;
               return newMatrix;
             }
           }
@@ -87,7 +100,6 @@ const smartBot = (matrix) => {
       // console.log("counterForO", counterForO);
     }
     //TODO: make attack also not just defense
-    // * straight lines scan (vertical)
     return handleLater(newMatrix);
     // TODO: figure out algorithm for the rest of the game
     // ?MAYBE DO A SEPERATE ALGORITHM FOR EACH MOVE? - INCLUDING CHECKING THE POSITIONS OF ENEMY / SELF POSITIONS
