@@ -219,7 +219,7 @@ const Game = () => {
             color="primary"
             variant="contained"
             onClick={setSmartestMode}
-            // disabled
+            disabled
           >
             START Smartest Mode [not done yet]
           </Button>
