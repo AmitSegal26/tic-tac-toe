@@ -114,6 +114,7 @@ const Game = () => {
   return (
     <Container
       sx={{
+        p: 2,
         display: "flex",
         flexDirection: start ? { xs: "column", lg: "row" } : "column",
       }}
@@ -123,7 +124,14 @@ const Game = () => {
         rulesArr={rulesArr}
       />
       {isGameEnd || isTie ? (
-        <Box sx={{ p: 1, m: 2, height: "70px", alignSelf: "center" }}>
+        <Box
+          sx={{
+            p: 1,
+            m: 2,
+            height: "70px",
+            alignSelf: "center",
+          }}
+        >
           <Tooltip title="reset game">
             <Button variant="contained" onClick={handleResetClick}>
               <RestartAltIcon />

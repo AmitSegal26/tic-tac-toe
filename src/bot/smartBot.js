@@ -1,11 +1,25 @@
+import { getRandomIntIn } from "../service/getRandomIntInlusive";
 import SIGNS from "../utils/USERSSIGNS";
 import { getArrOfEmptyCells } from "./arrOfEmptyCells";
 import { randomBot } from "./randomBot";
 const handleLater = (matrix) => randomBot(matrix);
 
+//? TODO: make only one option to win each game, and randomize the way to win each game
+
 const smartBot = (matrix) => {
   const arrOfEmpty = getArrOfEmptyCells(matrix);
   let newMatrix = JSON.parse(JSON.stringify(matrix));
+  let isDefensiveMode = false;
+  let isMoveDone = false;
+
+  const signOfPlayerFirstPLayer = () => {
+    // x player
+    return isDefensiveMode ? SIGNS.X : SIGNS.O;
+  };
+  const signOfPlayerResponderPlayer = (isToPlace = false) => {
+    // o player
+    return isDefensiveMode ? SIGNS.O : isToPlace ? SIGNS.O : SIGNS.X;
+  };
   if (arrOfEmpty.length === 8) {
     // meaning this it the first move of the bot
     //* loops for corners move
@@ -61,90 +75,129 @@ const smartBot = (matrix) => {
       }
       return newMatrix;
     }
-    // TODO: make algorithm for border moves
   } else {
-    // a move after first move
-    // * corners scan
-    // an array with 3 indexes - pointing to the matrix array
-    const arrOfTopLeftToBottomRightDiagonalLine = [
-      newMatrix[0][0],
-      newMatrix[1][1],
-      newMatrix[2][2],
-    ];
-    const arrOfBottomLeftToTopRightDiagonalLine = [
-      newMatrix[2][0],
-      newMatrix[1][1],
-      newMatrix[0][2],
-    ];
-    // checking TopLeftToBottomRightDiagonalLine
-    let counterForX = 0;
-    let counterForO = 0;
-    for (let i = 0; i < arrOfTopLeftToBottomRightDiagonalLine.length; i++) {
-      counterForX +=
-        arrOfTopLeftToBottomRightDiagonalLine[i].value === SIGNS.X ? 1 : 0;
-      counterForO +=
-        arrOfTopLeftToBottomRightDiagonalLine[i].value === SIGNS.O ? 1 : 0;
-    }
-    if (counterForX === 2 && counterForO === 0) {
-      for (let i = 0; i < arrOfTopLeftToBottomRightDiagonalLine.length; i++) {
-        if (arrOfTopLeftToBottomRightDiagonalLine[i].value === "") {
-          arrOfTopLeftToBottomRightDiagonalLine[i].value = SIGNS.O;
-          return newMatrix;
+    for (let counter = 0; counter < 2 && !isMoveDone; counter++) {
+      //! a move after first move
+      // change!
+      if (!getRandomIntIn(0, 3) && false) {
+        // decides wether to do a smart move or not
+        return handleLater(newMatrix);
+      } else {
+        // * corners scan
+        // an array with 3 indexes - pointing to the matrix array
+        const arrOfTopLeftToBottomRightDiagonalLine = [
+          newMatrix[0][0],
+          newMatrix[1][1],
+          newMatrix[2][2],
+        ];
+        const arrOfBottomLeftToTopRightDiagonalLine = [
+          newMatrix[2][0],
+          newMatrix[1][1],
+          newMatrix[0][2],
+        ];
+        // checking TopLeftToBottomRightDiagonalLine
+        let counterForX = 0;
+        let counterForO = 0;
+        for (let i = 0; i < arrOfTopLeftToBottomRightDiagonalLine.length; i++) {
+          counterForX +=
+            arrOfTopLeftToBottomRightDiagonalLine[i].value ===
+            signOfPlayerFirstPLayer()
+              ? 1
+              : 0;
+          counterForO +=
+            arrOfTopLeftToBottomRightDiagonalLine[i].value ===
+            signOfPlayerResponderPlayer()
+              ? 1
+              : 0;
         }
-      }
-    }
-    // checking BottomLeftToTopRightDiagonalLine
-    counterForX = 0;
-    counterForO = 0;
-    for (let i = 0; i < arrOfBottomLeftToTopRightDiagonalLine.length; i++) {
-      counterForX +=
-        arrOfBottomLeftToTopRightDiagonalLine[i].value === SIGNS.X ? 1 : 0;
-      counterForO +=
-        arrOfBottomLeftToTopRightDiagonalLine[i].value === SIGNS.O ? 1 : 0;
-    }
-    if (counterForX === 2 && counterForO === 0) {
-      for (let i = 0; i < arrOfBottomLeftToTopRightDiagonalLine.length; i++) {
-        if (arrOfBottomLeftToTopRightDiagonalLine[i].value === "") {
-          arrOfBottomLeftToTopRightDiagonalLine[i].value = SIGNS.O;
-          return newMatrix;
-        }
-      }
-    }
-    // * straight lines scan (horizontal + vertical)
-    for (let i = 0; i < newMatrix.length; i++) {
-      let counterForXHorizontal = 0;
-      let counterForOHorizontal = 0;
-      let counterForXVertical = 0;
-      let counterForOVertical = 0;
-      for (let j = 0; j < newMatrix[i].length; j++) {
-        counterForXVertical += newMatrix[i][j].value === SIGNS.X ? 1 : 0;
-        counterForOVertical += newMatrix[i][j].value === SIGNS.O ? 1 : 0;
-        counterForXHorizontal += newMatrix[j][i].value === SIGNS.X ? 1 : 0;
-        counterForOHorizontal += newMatrix[j][i].value === SIGNS.O ? 1 : 0;
-        if (counterForXVertical === 2 && counterForOVertical === 0 && j === 2) {
-          for (let k = 0; k < newMatrix[i].length; k++) {
-            if (newMatrix[i][k].value !== SIGNS.X) {
-              newMatrix[i][k].value = SIGNS.O;
-              return newMatrix;
-            }
-          }
-        } else if (
-          counterForXHorizontal === 2 &&
-          counterForOHorizontal === 0 &&
-          j === 2
-        ) {
-          for (let k = 0; k < newMatrix[i].length; k++) {
-            if (newMatrix[k][i].value !== SIGNS.X) {
-              newMatrix[k][i].value = SIGNS.O;
+        if (counterForX === 2 && counterForO === 0) {
+          for (
+            let i = 0;
+            i < arrOfTopLeftToBottomRightDiagonalLine.length;
+            i++
+          ) {
+            if (arrOfTopLeftToBottomRightDiagonalLine[i].value === "") {
+              arrOfTopLeftToBottomRightDiagonalLine[i].value =
+                signOfPlayerResponderPlayer(true);
               return newMatrix;
             }
           }
         }
+        // checking BottomLeftToTopRightDiagonalLine
+        counterForX = 0;
+        counterForO = 0;
+        for (let i = 0; i < arrOfBottomLeftToTopRightDiagonalLine.length; i++) {
+          counterForX +=
+            arrOfBottomLeftToTopRightDiagonalLine[i].value ===
+            signOfPlayerFirstPLayer()
+              ? 1
+              : 0;
+          counterForO +=
+            arrOfBottomLeftToTopRightDiagonalLine[i].value ===
+            signOfPlayerResponderPlayer()
+              ? 1
+              : 0;
+        }
+        if (counterForX === 2 && counterForO === 0) {
+          for (
+            let i = 0;
+            i < arrOfBottomLeftToTopRightDiagonalLine.length;
+            i++
+          ) {
+            if (arrOfBottomLeftToTopRightDiagonalLine[i].value === "") {
+              arrOfBottomLeftToTopRightDiagonalLine[i].value =
+                signOfPlayerResponderPlayer(true);
+              return newMatrix;
+            }
+          }
+        }
+        // * straight lines scan (horizontal + vertical)
+        for (let i = 0; i < newMatrix.length; i++) {
+          let counterForXHorizontal = 0;
+          let counterForOHorizontal = 0;
+          let counterForXVertical = 0;
+          let counterForOVertical = 0;
+          for (let j = 0; j < newMatrix[i].length; j++) {
+            counterForXVertical +=
+              newMatrix[i][j].value === signOfPlayerFirstPLayer() ? 1 : 0;
+            counterForOVertical +=
+              newMatrix[i][j].value === signOfPlayerResponderPlayer() ? 1 : 0;
+            counterForXHorizontal +=
+              newMatrix[j][i].value === signOfPlayerFirstPLayer() ? 1 : 0;
+            counterForOHorizontal +=
+              newMatrix[j][i].value === signOfPlayerResponderPlayer() ? 1 : 0;
+            if (
+              counterForXVertical === 2 &&
+              counterForOVertical === 0 &&
+              j === 2
+            ) {
+              for (let k = 0; k < newMatrix[i].length; k++) {
+                if (newMatrix[i][k].value !== signOfPlayerFirstPLayer()) {
+                  newMatrix[i][k].value = signOfPlayerResponderPlayer(true);
+                  return newMatrix;
+                }
+              }
+            } else if (
+              counterForXHorizontal === 2 &&
+              counterForOHorizontal === 0 &&
+              j === 2
+            ) {
+              for (let k = 0; k < newMatrix[i].length; k++) {
+                if (newMatrix[k][i].value !== signOfPlayerFirstPLayer()) {
+                  newMatrix[k][i].value = signOfPlayerResponderPlayer(true);
+                  return newMatrix;
+                }
+              }
+            } else {
+            }
+          }
+        }
       }
+      isDefensiveMode = true;
+      isMoveDone = false;
+      if (counter === 1) return handleLater(newMatrix);
+      // ?MAYBE DO A SEPERATE ALGORITHM FOR EACH MOVE? - INCLUDING CHECKING THE POSITIONS OF ENEMY / SELF POSITIONS
     }
-    //TODO: make attack also not just defense
-    return handleLater(newMatrix);
-    // ?MAYBE DO A SEPERATE ALGORITHM FOR EACH MOVE? - INCLUDING CHECKING THE POSITIONS OF ENEMY / SELF POSITIONS
   }
 };
 

@@ -59,7 +59,7 @@ const RowComp = ({
                   : COLORS.TEXT2,
             }}
           >
-            [{i},{j}]{matrixValue[i][j].value}
+            {matrixValue[i][j].value}
           </Typography>
         </Box>
       ))}
