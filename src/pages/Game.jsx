@@ -1,13 +1,14 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import SquaresComp from "./SquaresComp";
-import COLORS from "../../utils/COLORS";
-import SIGNS from "../../utils/USERSSIGNS";
-import { checkIfWin } from "../../functions/checkIfWin";
-import GameIntro from "../../components/navbar/GameIntro";
-import { emptyBoardMatrix } from "../../utils/emptyBoardMatrix";
-import { handleReset } from "../../functions/resetGameState";
-
+import SquaresComp from "../components/game/board/SquaresComp";
+import { checkIfWin } from "../functions/checkIfWin";
+import GameIntro from "../components/game/GameIntro";
+import { handleReset } from "../functions/resetGameState";
+import { dict } from "../utils/dict";
+import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
+const { SIGNS } = dict;
+const { emptyBoardMatrix } = dict;
+const { COLORS } = dict;
 const Game = () => {
   const [turnOfX, setTurnOfX] = useState(true);
   const [isTie, setIsTie] = useState(false);
@@ -112,23 +113,13 @@ const Game = () => {
             m: 3,
           }}
         >
-          <Typography
-            component="h4"
-            variant="h4"
-            sx={{ color: isGameEnd ? "white" : COLORS.TEXT2 }}
-          >
-            {isTie
-              ? "Its A Tie!"
-              : isGameEnd
-              ? turnOfX
-                ? SIGNS.O
-                : SIGNS.X
-              : turnOfX
-              ? SIGNS.X
-              : SIGNS.O}
-            {isTie ? "" : "'s"} {isTie ? "" : isGameEnd ? "Victory!" : "Turn"}
-          </Typography>
+          <TurnAndWinIndicator
+            isTie={isTie}
+            isGameEnd={isGameEnd}
+            turnOfX={turnOfX}
+          />
           <SquaresComp
+            sizeOfBoard={dict.sizeOfBoard}
             isGameEndProp={isGameEnd}
             handleClickFunc={clickOfCell}
             matrixValue={matrixXO}

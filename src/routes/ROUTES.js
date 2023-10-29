@@ -1,7 +1,7 @@
 const ROUTES = {
   HOME: "/",
   GAME: "/gamepage",
-  GAMERANDOM: "/gamerandompage",
+  BOT: "/gamerandompage",
 };
 
 export default ROUTES;

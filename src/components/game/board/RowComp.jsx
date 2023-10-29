@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import COLORS from "../../utils/COLORS";
-
+import { dict } from "../../../utils/dict";
+const { COLORS } = dict;
 const RowComp = ({
   i,
   handleClickFunc,
@@ -9,10 +9,15 @@ const RowComp = ({
   isGameEndProp,
   victoryOptProp,
 }) => {
-  const rowStyleObj = { width: "fit-content", display: "flex" };
+  // const rowStyleObj = { width: "fit-content", display: "flex" };
+  const rowStyleObj = {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+  };
   const cellStyleObj = {
-    width: "10vw",
-    height: "10vw",
+    width: "100%",
+    height: "100%",
     border: "3px solid black",
     transition: "all 0.1s linear",
     cursor: isGameEndProp ? "default" : "pointer",

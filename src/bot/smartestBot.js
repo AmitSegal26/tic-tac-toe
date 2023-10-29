@@ -1,6 +1,7 @@
-import SIGNS from "../utils/USERSSIGNS";
 import { getArrOfEmptyCells } from "./arrOfEmptyCells";
 import { randomBot } from "./randomBot";
+import { dict } from "../utils/dict";
+const { SIGNS } = dict;
 const handleLater = (matrix) => randomBot(matrix);
 
 const smartestBot = (matrix) => {

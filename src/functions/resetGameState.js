@@ -1,5 +1,5 @@
-import { emptyBoardMatrix } from "../utils/emptyBoardMatrix";
-
+import { dict } from "../utils/dict";
+const { emptyBoardMatrix } = dict;
 export const handleReset = (
   setMatrixXO,
   setVictoryOpt,

@@ -1,7 +1,9 @@
 import { getRandomIntIn } from "../service/getRandomIntInlusive";
-import SIGNS from "../utils/USERSSIGNS";
+import { dict } from "../utils/dict";
 import { getArrOfEmptyCells } from "./arrOfEmptyCells";
 import { randomBot } from "./randomBot";
+
+const { SIGNS } = dict;
 const handleLater = (matrix) => randomBot(matrix);
 
 //? TODO: make only one option to win each game, and randomize the way to win each game

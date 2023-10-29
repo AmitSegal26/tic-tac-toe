@@ -6,7 +6,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneCallbackIcon from "@mui/icons-material/PhoneCallback";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import COLORS from "../../utils/COLORS";
+import { dict } from "../../utils/dict";
+const { COLORS } = dict;
 const IconComponentForFooter = ({ linkObjProp }) => {
   const styleObjIcon = { color: "white" };
   const pickColor = (linkObj) => {

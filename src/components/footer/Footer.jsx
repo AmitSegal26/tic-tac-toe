@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
-import COLORS from "../../utils/COLORS";
+import { dict } from "../../utils/dict";
 import IconComponentForFooter from "./IconComponentForFooter";
 import myImg from "../../assets/imgs/Picture1.png";
+const { COLORS } = dict;
 const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
   const [bgColorState, setBgColorState] = useState(COLORS.BLACK);
   useEffect(() => {
@@ -51,12 +52,14 @@ const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
   return (
     <Box
       sx={{
-        p: 2,
+        p: 1,
         display: "flex",
+        flexWrap: "wrap",
         justifyContent: "space-around",
         alignItems: "center",
         transition: "background-color 0.5s ease-in-out",
         backgroundColor: bgColorState,
+        height: "fit-content",
       }}
     >
       <Box
@@ -84,7 +87,7 @@ const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
       </Box>
       <Box
         sx={{
-          width: "40vw",
+          width: "50%",
           p: 2,
           display: "flex",
           justifyContent: "space-between",

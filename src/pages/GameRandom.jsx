@@ -1,16 +1,18 @@
 import { Box, Button, Container, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import SquaresComp from "./SquaresComp";
-import COLORS from "../../utils/COLORS";
-import { randomBot } from "../../bot/randomBot";
-import SIGNS from "../../utils/USERSSIGNS";
-import { checkIfWin } from "../../functions/checkIfWin";
-import GameIntro from "../../components/navbar/GameIntro";
-import { handleReset } from "../../functions/resetGameState";
-import smartBot from "../../bot/smartBot";
-import { emptyBoardMatrix } from "../../utils/emptyBoardMatrix";
-import smartestBot from "../../bot/smartestBot";
+import SquaresComp from "../components/game/board/SquaresComp";
+import { randomBot } from "../bot/randomBot";
+import { checkIfWin } from "../functions/checkIfWin";
+import GameIntro from "../components/game/GameIntro";
+import { handleReset } from "../functions/resetGameState";
+import smartBot from "../bot/smartBot";
+import smartestBot from "../bot/smartestBot";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { dict } from "../utils/dict";
+import TurnAndWinIndicator from "./../components/game/TurnAndWinIndicator";
+import ModeMenu from "../components/game/ModeMenu";
+const { SIGNS } = dict;
+const { emptyBoardMatrix } = dict;
 const Game = () => {
   const [gameMode, setGameMode] = useState(null);
   /*
@@ -110,7 +112,6 @@ const Game = () => {
     handleResetClick();
     setStart(false);
   };
-  const btnStyleObj = { p: 3, m: 2, fontSize: "2rem", borderRadius: "50px" };
   return (
     <Container
       sx={{
@@ -165,23 +166,13 @@ const Game = () => {
               : "UNKNOWN"}{" "}
             Mode
           </Typography>
-          <Typography
-            component="h4"
-            variant="h4"
-            sx={{ color: isGameEnd ? "white" : COLORS.TEXT2 }}
-          >
-            {isTie
-              ? "Its A Tie!"
-              : isGameEnd
-              ? turnOfX
-                ? SIGNS.O
-                : SIGNS.X
-              : turnOfX
-              ? SIGNS.X
-              : SIGNS.O}
-            {isTie ? "" : "'s"} {isTie ? "" : isGameEnd ? "Victory!" : "Turn"}
-          </Typography>
+          <TurnAndWinIndicator
+            isTie={isTie}
+            isGameEnd={isGameEnd}
+            turnOfX={turnOfX}
+          />
           <SquaresComp
+            sizeOfBoard={dict.sizeOfBoard}
             isGameEndProp={isGameEnd}
             handleClickFunc={clickOfCell}
             matrixValue={matrixXO}
@@ -196,34 +187,11 @@ const Game = () => {
           </Button>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            sx={btnStyleObj}
-            color="secondary"
-            variant="contained"
-            onClick={setRandomMode}
-          >
-            START Random Mode
-          </Button>
-          <Button
-            sx={btnStyleObj}
-            color="warning"
-            variant="contained"
-            onClick={setSmartMode}
-            // disabled
-          >
-            START Smart Mode [not done yet]
-          </Button>
-          <Button
-            sx={btnStyleObj}
-            color="primary"
-            variant="contained"
-            onClick={setSmartestMode}
-            disabled
-          >
-            START Smartest Mode [not done yet]
-          </Button>
-        </Box>
+        <ModeMenu
+          setRandomModeFunc={setRandomMode}
+          setSmartModeFunc={setSmartMode}
+          setSmartestModeFunc={setSmartestMode}
+        />
       )}
     </Container>
   );

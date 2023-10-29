@@ -1,10 +1,10 @@
 import "./App.css";
-import COLORS from "./utils/COLORS";
+import { dict } from "./utils/dict";
 import Navbar from "./components/navbar/Navbar";
 import Router from "./routes/Router";
 import Footer from "./components/footer/Footer";
 import { useState } from "react";
-
+const { COLORS } = dict;
 function App() {
   const [isContactPressed, setIsContactPressed] = useState(false);
   return (
@@ -12,9 +12,7 @@ function App() {
       <header>
         <Navbar setIsContactPressedFunc={setIsContactPressed} />
       </header>
-      <main
-        style={{ border: "3px solid black", backgroundColor: COLORS.SECONDARY }}
-      >
+      <main style={{ backgroundColor: COLORS.SECONDARY }}>
         <Router />
       </main>
       <footer>

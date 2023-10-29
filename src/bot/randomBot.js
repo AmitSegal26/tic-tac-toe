@@ -1,6 +1,7 @@
 import { getRandomIntIn } from "../service/getRandomIntInlusive";
-import SIGNS from "../utils/USERSSIGNS";
 import { getArrOfEmptyCells } from "./arrOfEmptyCells";
+import { dict } from "../utils/dict";
+const { SIGNS } = dict;
 
 export const randomBot = (matrix) => {
   const arrOfEmptyCells = getArrOfEmptyCells(matrix);

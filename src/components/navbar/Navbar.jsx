@@ -1,11 +1,31 @@
 import React from "react";
-import { AppBar, Box, Button, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import COLORS from "../../utils/COLORS";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 import ROUTES from "./../../routes/ROUTES";
+import MenuIcon from "@mui/icons-material/Menu";
+import { dict } from "../../utils/dict";
+const { COLORS } = dict;
 const Navbar = ({ setIsContactPressedFunc }) => {
   const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (e) => {
+    setAnchorElNav(e.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
   const linksArr = Object.keys(ROUTES);
   const styleObjForNavLink = ({ isActive }) => {
     return {
@@ -26,52 +46,94 @@ const Navbar = ({ setIsContactPressedFunc }) => {
     });
     setIsContactPressedFunc(true);
   };
+  // const heightOfNavBar = "50px";
+  const heightOfNavBar = "100%";
   return (
-    <Box>
-      <AppBar
-        position="static"
-        sx={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          backgroundColor: COLORS.MAIN,
-        }}
-      >
-        <Box
+    <AppBar
+      position="static"
+      sx={{
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: COLORS.MAIN,
+        height: `${+heightOfNavBar.split("p")[0] + 20}px`,
+        boxShadow: " 0px 0px 0px 13px rgba(0, 0, 0, 1)",
+      }}
+    >
+      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenNavMenu}
+          color="inherit"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElNav}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          open={Boolean(anchorElNav)}
+          onClose={handleCloseNavMenu}
           sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1.5rem",
-            backgroundColor: COLORS.MAIN,
+            display: { xs: "block", md: "none" },
           }}
         >
-          {linksArr.map((link, i) => (
-            <NavLink key={link} to={ROUTES[link]} style={styleObjForNavLink}>
-              <Toolbar>{link}</Toolbar>
-            </NavLink>
+          {linksArr.map((link) => (
+            <MenuItem key={link} onClick={handleCloseNavMenu}>
+              <NavLink key={link} to={ROUTES[link]} style={styleObjForNavLink}>
+                {link}
+              </NavLink>
+            </MenuItem>
           ))}
-          <Button
-            variant="outlined"
-            color="warning"
-            sx={{
-              fontWeight: "bold",
-              letterSpacing: "0.1rem",
-              bgcolor: COLORS.TEXT2,
-            }}
-            autoFocus
-            onClick={handleContactClick}
-          >
-            "Contact The Author!"
-          </Button>
-        </Box>
-        {/* LOGO */}
-        <Box
-          sx={{ width: "20%", cursor: "pointer" }}
-          onClick={handleLogoClick}
-          component="img"
-          src={logoImg}
-        />
-      </AppBar>
-    </Box>
+        </Menu>
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          alignItems: "center",
+          gap: "1.5rem",
+          backgroundColor: COLORS.MAIN,
+          height: heightOfNavBar,
+        }}
+      >
+        {linksArr.map((link) => (
+          <NavLink key={link} to={ROUTES[link]} style={styleObjForNavLink}>
+            <Box sx={{ maxHeight: "50px", p: 1 }}>{link}</Box>
+          </NavLink>
+        ))}
+        <Button
+          variant="outlined"
+          color="warning"
+          sx={{
+            fontWeight: "bold",
+            letterSpacing: "0.1rem",
+            bgcolor: COLORS.TEXT2,
+          }}
+          autoFocus
+          onClick={handleContactClick}
+        >
+          "Contact The Author!"
+        </Button>
+      </Box>
+      {/* LOGO */}
+      <Box
+        sx={{ cursor: "pointer", height: heightOfNavBar }}
+        onClick={handleLogoClick}
+        component="img"
+        src={logoImg}
+      />
+    </AppBar>
   );
 };
 

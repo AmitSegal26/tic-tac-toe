@@ -1,3 +1,27 @@
 .App {
   text-align: center;
 }
+@media (min-width: 600px) {
+  header {
+    height: 5vh;
+  }
+  main {
+    height: 75vh;
+    overflow-y: scroll;
+  }
+  footer {
+    height: 20vh;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    height: 50px;
+  }
+  main {
+    /* height: 75vh; */
+    /* overflow-y: scroll; */
+  }
+  footer {
+    /* height: 400px; */
+  }
+}
