@@ -4,7 +4,7 @@ import ROUTES from "./ROUTES";
 
 const CheckErrorRoute = ({ element }) => {
   const { pathname } = useLocation();
-  return pathname && pathname === "/tic-tac-toe" ? (
+  return pathname && pathname.includes("tic-tac-toe") ? (
     <Navigate to={ROUTES.GAME} />
   ) : (
     element
