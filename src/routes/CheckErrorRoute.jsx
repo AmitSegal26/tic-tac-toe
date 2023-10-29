@@ -4,6 +4,7 @@ import ROUTES from "./ROUTES";
 
 const CheckErrorRoute = ({ element }) => {
   const { pathname } = useLocation();
+  console.log(pathname);
   return pathname && pathname.includes("tic-tac-toe") ? (
     <Navigate to={ROUTES.GAME} />
   ) : (
