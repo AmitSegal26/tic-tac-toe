@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 import ROUTES from "./../../routes/ROUTES";
@@ -17,7 +9,6 @@ const { COLORS } = dict;
 const Navbar = ({ setIsContactPressedFunc }) => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (e) => {
     setAnchorElNav(e.currentTarget);
@@ -37,7 +28,7 @@ const Navbar = ({ setIsContactPressedFunc }) => {
     };
   };
   const handleLogoClick = () => {
-    navigate(ROUTES.HOME);
+    navigate(ROUTES.GAME);
   };
   const handleContactClick = () => {
     window.scrollTo({

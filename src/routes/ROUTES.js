@@ -1,5 +1,4 @@
 const ROUTES = {
-  HOME: "/",
   GAME: "/gamepage",
   BOT: "/gamerandompage",
 };

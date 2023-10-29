@@ -59,7 +59,7 @@ const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
         alignItems: "center",
         transition: "background-color 0.5s ease-in-out",
         backgroundColor: bgColorState,
-        height: "fit-content",
+        height: "100%",
       }}
     >
       <Box
