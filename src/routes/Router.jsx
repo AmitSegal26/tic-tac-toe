@@ -11,6 +11,7 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<Home />} />
       <Route path={ROUTES.BOT} element={<GameRandom />} />
       <Route path={ROUTES.GAME} element={<Game />} />
+      <Route path="/tic-tac-toe" element={<h1>a</h1>} />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
