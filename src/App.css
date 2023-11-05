@@ -4,8 +4,3 @@
 header {
   height: 50px;
 }
-@media (min-width: 600px) {
-  footer {
-    height: 20vh;
-  }
-}

@@ -8,18 +8,25 @@ import welcomePic from "../../assets/imgs/buttonsHomePage/welcome.jpg";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { dict } from "./../../utils/dict";
+import { useDispatch } from "react-redux";
+import { pressedOn } from "../../store/contactSlice";
 import "./landingPage.css";
 
 const TYPES = [
   { link: "GAME", title: "Play Local 1v1 Game" },
   { link: "REGISTER", title: "Create an account" },
-  { link: "CONTACT", title: "" },
+  { link: "CONTACT", title: "Contact The Creator" },
   { link: "BOT", title: "Play against the bot" },
   { link: "ONLINE", title: "Play online" },
 ];
 const GridBox = ({ type }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = () => {
+    if (type === TYPES[2]) {
+      dispatch(pressedOn());
+      return;
+    }
     window.scrollTo({ top: 0 });
     navigate(ROUTES[type?.link || ROUTES.HOME]);
   };

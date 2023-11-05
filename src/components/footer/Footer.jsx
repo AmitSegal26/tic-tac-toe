@@ -3,19 +3,26 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { dict } from "../../utils/dict";
 import IconComponentForFooter from "./IconComponentForFooter";
 import myImg from "../../assets/imgs/Picture1.png";
+import { useDispatch, useSelector } from "react-redux";
+import { pressedOff } from "../../store/contactSlice";
 const { COLORS } = dict;
-const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
+
+const Footer = () => {
+  const dispatch = useDispatch();
   const [bgColorState, setBgColorState] = useState(COLORS.BLACK);
+  const {
+    contactSlice: { pressed },
+  } = useSelector((bigRedux) => bigRedux);
   useEffect(() => {
-    if (isContactPressedState) {
+    if (pressed) {
       setBgColorState(COLORS.WHITE);
       setTimeout(() => {
-        setIsContactPressedFunc(false);
+        dispatch(pressedOff());
       }, 500);
     } else {
       setBgColorState(COLORS.BLACK);
     }
-  }, [isContactPressedState, setIsContactPressedFunc]);
+  }, [pressed]);
   const arrOfLinks = [
     {
       type: "gitHub",
@@ -52,7 +59,7 @@ const Footer = ({ isContactPressedState, setIsContactPressedFunc }) => {
   return (
     <Box
       sx={{
-        p: 1,
+        p: 5,
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-around",

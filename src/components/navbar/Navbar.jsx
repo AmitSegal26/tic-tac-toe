@@ -10,6 +10,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import HomeIcon from "@mui/icons-material/Home";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { dict } from "../../utils/dict";
+import { useDispatch } from "react-redux";
+import { pressedOn } from "../../store/contactSlice";
 const { COLORS } = dict;
 
 const IconCompnentForLinks = ({ type }) => {
@@ -28,7 +30,8 @@ const IconCompnentForLinks = ({ type }) => {
       return "";
   }
 };
-const Navbar = ({ setIsContactPressedFunc }) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -55,11 +58,7 @@ const Navbar = ({ setIsContactPressedFunc }) => {
     navigate(ROUTES.HOME);
   };
   const handleContactClick = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-    setIsContactPressedFunc(true);
+    dispatch(pressedOn());
   };
   const heightOfNavBar = "100%";
   return (
@@ -148,7 +147,7 @@ const Navbar = ({ setIsContactPressedFunc }) => {
           autoFocus
           onClick={handleContactClick}
         >
-          "Contact The Author!"
+          Contact The Author!
         </Button>
       </Box>
       {/* LOGO */}
