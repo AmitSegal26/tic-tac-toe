@@ -4,8 +4,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logoImg from "../../assets/imgs/logoTransparent.png";
 import ROUTES from "./../../routes/ROUTES";
 import MenuIcon from "@mui/icons-material/Menu";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
+import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
+import LanguageIcon from "@mui/icons-material/Language";
+import HomeIcon from "@mui/icons-material/Home";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { dict } from "../../utils/dict";
 const { COLORS } = dict;
+
+const IconCompnentForLinks = ({ type }) => {
+  switch (type) {
+    case "HOME":
+      return <HomeIcon />;
+    case "REGISTER":
+      return <HowToRegIcon />;
+    case "GAME":
+      return <SportsKabaddiIcon />;
+    case "BOT":
+      return <SmartToyIcon />;
+    case "ONLINE":
+      return <LanguageIcon />;
+    default:
+      return "";
+  }
+};
 const Navbar = ({ setIsContactPressedFunc }) => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -23,12 +45,14 @@ const Navbar = ({ setIsContactPressedFunc }) => {
       transition: "all 0.5s ease-in-out",
       color: isActive ? COLORS.TEXT1 : COLORS.TEXT2,
       textDecoration: "none",
-      borderRadius: "10px",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      letterSpacing: "0.05rem",
       backgroundColor: isActive ? COLORS.WHITE : "transparent",
     };
   };
   const handleLogoClick = () => {
-    navigate(ROUTES.GAME);
+    navigate(ROUTES.HOME);
   };
   const handleContactClick = () => {
     window.scrollTo({
@@ -37,18 +61,17 @@ const Navbar = ({ setIsContactPressedFunc }) => {
     });
     setIsContactPressedFunc(true);
   };
-  // const heightOfNavBar = "50px";
   const heightOfNavBar = "100%";
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
         backgroundColor: COLORS.MAIN,
         height: `${+heightOfNavBar.split("p")[0] + 20}px`,
-        boxShadow: " 0px 0px 0px 13px rgba(0, 0, 0, 1)",
+        boxShadow: "0px 1px 20px 5px rgba(0, 0, 0, 0.5)",
       }}
     >
       <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -100,7 +123,18 @@ const Navbar = ({ setIsContactPressedFunc }) => {
       >
         {linksArr.map((link) => (
           <NavLink key={link} to={ROUTES[link]} style={styleObjForNavLink}>
-            <Box sx={{ maxHeight: "50px", p: 1 }}>{link}</Box>
+            <Box
+              sx={{
+                maxHeight: "50px",
+                p: 1,
+                alignItems: "center",
+                gap: "0.2rem",
+                display: "flex",
+              }}
+            >
+              <IconCompnentForLinks type={link} />
+              {link}
+            </Box>
           </NavLink>
         ))}
         <Button

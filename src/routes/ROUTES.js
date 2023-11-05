@@ -1,6 +1,9 @@
 const ROUTES = {
+  HOME: "/home",
+  REGISTER: "/register",
   GAME: "/gamepage",
-  BOT: "/gamerandompage",
+  BOT: "/gamemodes",
+  ONLINE: "/online",
 };
 
 export default ROUTES;

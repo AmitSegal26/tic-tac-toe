@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SquaresComp from "../components/game/board/SquaresComp";
 import { checkIfWin } from "../functions/checkIfWin";
@@ -8,7 +8,6 @@ import { dict } from "../utils/dict";
 import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
-const { COLORS } = dict;
 const Game = () => {
   const [turnOfX, setTurnOfX] = useState(true);
   const [isTie, setIsTie] = useState(false);

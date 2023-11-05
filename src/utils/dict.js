@@ -1,3 +1,9 @@
+const setObjectOfAchievement = (description, complete = false) =>
+  typeof description === "string" &&
+  description !== "" && {
+    description,
+    complete,
+  };
 export const dict = {
   sizeOfBoard: "40vh",
   SIGNS: {
@@ -28,5 +34,16 @@ export const dict = {
     TEXT2: "#3F3F3F",
     BLACK: "#000",
     WHITE: "#FAF2D3",
+  },
+  nameOfData: "usersOfTicTacToe",
+  achievements: {
+    createAnAccount: setObjectOfAchievement("Create your first account!", true),
+    playFirstGameEver: setObjectOfAchievement("Play your first game ever!"),
+    playFirstGameAgainsBot: setObjectOfAchievement(
+      "Play your first game ever against a bot!"
+    ),
+    winRandom5: setObjectOfAchievement("Beat 'Normal Mode' 5 times in a row"),
+    winRandom10: setObjectOfAchievement("Beat 'Normal Mode' 10 times in a row"),
+    winSmart10: setObjectOfAchievement("Beat 'Hard Mode' 10 times in a row"),
   },
 };

@@ -1,0 +1,59 @@
+:root {
+  --trya: 10px;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: whitesmoke;
+  box-shadow: 0px 10px 20px -5px black;
+}
+.banner::before {
+  content: "";
+  width: 100%;
+  position: absolute;
+  /* background-image: url(../../assets/imgs/banner.jpg); */
+  background-image: url(../../assets/imgs/banner2.jpg);
+  background-position: center;
+  background-size: auto;
+  height: 100%;
+  opacity: 0.4;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  animation: animaat 10s ease-in-out infinite;
+}
+.banner h1 {
+  text-shadow: 4px 4px 9px whitesmoke;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  position: relative;
+  color: #000000ff;
+  opacity: 1;
+  padding: 1rem;
+}
+@media (min-width: 900px) {
+  .banner h1 {
+    font-size: 4.5em;
+  }
+}
+@media (max-width: 900px) {
+  .banner h1 {
+    font-size: 2em;
+  }
+}
+@keyframes animaat {
+  0%,
+  100% {
+    transform: translateX(var(--trya)) scale(1.2);
+  }
+  50% {
+    transform: translateX(calc(var(--trya) * -1)) scale(1.2);
+  }
+}

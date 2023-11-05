@@ -9,7 +9,7 @@ import smartBot from "../bot/smartBot";
 import smartestBot from "../bot/smartestBot";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { dict } from "../utils/dict";
-import TurnAndWinIndicator from "./../components/game/TurnAndWinIndicator";
+import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
 import ModeMenu from "../components/game/ModeMenu";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
