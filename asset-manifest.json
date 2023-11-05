@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/tic-tac-toe/static/css/main.a5f8a8b5.css",
-    "main.js": "/tic-tac-toe/static/js/main.aa4da3aa.js",
+    "main.css": "/tic-tac-toe/static/css/main.1b0f4800.css",
+    "main.js": "/tic-tac-toe/static/js/main.a0dac564.js",
     "static/js/787.393238a3.chunk.js": "/tic-tac-toe/static/js/787.393238a3.chunk.js",
+    "static/media/page-under-construction.jpeg": "/tic-tac-toe/static/media/page-under-construction.ddfd23e693537021437b.jpeg",
     "static/media/welcome.jpg": "/tic-tac-toe/static/media/welcome.99f0198764a3b55f37f9.jpg",
     "static/media/tic-tac-toe-local.jpeg": "/tic-tac-toe/static/media/tic-tac-toe-local.f8c25ecf4ccc36d2821c.jpeg",
     "static/media/online-game.jpeg": "/tic-tac-toe/static/media/online-game.00b5877a9c9b4f26cb31.jpeg",
@@ -11,12 +12,12 @@
     "static/media/banner2.jpg": "/tic-tac-toe/static/media/banner2.8b700158d9540fbcdfeb.jpg",
     "static/media/logoTransparent.png": "/tic-tac-toe/static/media/logoTransparent.73397d7a51a5880e5bcb.png",
     "index.html": "/tic-tac-toe/index.html",
-    "main.a5f8a8b5.css.map": "/tic-tac-toe/static/css/main.a5f8a8b5.css.map",
-    "main.aa4da3aa.js.map": "/tic-tac-toe/static/js/main.aa4da3aa.js.map",
+    "main.1b0f4800.css.map": "/tic-tac-toe/static/css/main.1b0f4800.css.map",
+    "main.a0dac564.js.map": "/tic-tac-toe/static/js/main.a0dac564.js.map",
     "787.393238a3.chunk.js.map": "/tic-tac-toe/static/js/787.393238a3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a5f8a8b5.css",
-    "static/js/main.aa4da3aa.js"
+    "static/css/main.1b0f4800.css",
+    "static/js/main.a0dac564.js"
   ]
 }
