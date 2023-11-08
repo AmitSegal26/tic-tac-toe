@@ -8,9 +8,16 @@ const SquaresComp = ({
   isGameEndProp,
   victoryOptProp,
   sizeOfBoard,
+  gameModeProp,
 }) => {
+  const alternateSizeOfBoard = "250px";
   return (
-    <Box sx={{ height: sizeOfBoard, width: sizeOfBoard }}>
+    <Box
+      sx={{
+        height: { xs: alternateSizeOfBoard, md: sizeOfBoard },
+        width: { xs: alternateSizeOfBoard, md: sizeOfBoard },
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -31,6 +38,7 @@ const SquaresComp = ({
             matrixValue={matrixValue}
             isGameEndProp={isGameEndProp}
             victoryOptProp={victoryOptProp}
+            gameModeProp={gameModeProp}
           />
         ))}
       </Box>

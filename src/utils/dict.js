@@ -4,8 +4,9 @@ const setObjectOfAchievement = (description, complete = false) =>
     description,
     complete,
   };
+
 export const dict = {
-  sizeOfBoard: "40vh",
+  sizeOfBoard: "400px",
   SIGNS: {
     X: "X",
     O: "O",
@@ -34,6 +35,8 @@ export const dict = {
     TEXT2: "#3F3F3F",
     BLACK: "#000",
     WHITE: "#FAF2D3",
+    RED: "#E3515B",
+    BOARDBG: "#7F7F7F",
   },
   nameOfData: "usersOfTicTacToe",
   achievements: {

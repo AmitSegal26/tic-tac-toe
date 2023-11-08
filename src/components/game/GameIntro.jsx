@@ -18,7 +18,7 @@ const GameIntro = ({ welcomeText, rulesArr }) => {
     fontSize: mediaXLDown ? (mediaMDDown ? "0.75rem" : "1rem") : "1.25rem",
   };
   return (
-    <Box component="div">
+    <Box component="div" sx={{ mr: { xs: 0, md: 5 }, mb: 5 }}>
       <Typography
         component="h1"
         variant={mediaXLDown ? (mediaMDDown ? "h5" : "h4") : "h2"}

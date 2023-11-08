@@ -40,6 +40,7 @@ const Game = () => {
   useEffect(() => {
     if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       setIsGameEnd(true);
+      return;
     }
   }, [matrixXO, turnOfX, isTie]);
   const rulesArr = [
@@ -117,6 +118,8 @@ const Game = () => {
       sx={{
         p: 2,
         display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         flexDirection: start ? { xs: "column", lg: "row" } : "column",
       }}
     >
@@ -124,45 +127,33 @@ const Game = () => {
         welcomeText="Welcome to the game - RANDOM MODE!"
         rulesArr={rulesArr}
       />
-      {isGameEnd || isTie ? (
-        <Box
-          sx={{
-            p: 1,
-            m: 2,
-            height: "70px",
-            alignSelf: "center",
-          }}
-        >
-          <Tooltip title="reset game">
-            <Button variant="contained" onClick={handleResetClick}>
-              <RestartAltIcon />
-            </Button>
-          </Tooltip>
-        </Box>
-      ) : (
-        ""
-      )}
       {start ? (
         <Box
           component="div"
           sx={{
             transition: "background-color 1s linear",
-            backgroundColor: isGameEnd ? "#1f1f1f" : "",
+            backgroundColor: isGameEnd ? dict.COLORS.TEXT1 : "",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: "25px",
-            m: 3,
+            width: "fit-content",
+            height: "fit-content",
+            p: 5,
           }}
         >
-          <Typography color="error" component="h4" variant="h4">
+          <Typography
+            sx={{ color: dict.COLORS.RED }}
+            component="h4"
+            variant="h4"
+          >
             {gameMode === 0
-              ? "Random"
+              ? "Normal"
               : gameMode === 1
-              ? "Smart Bot"
+              ? "Hard"
               : gameMode === 2
-              ? "Smartest Bot"
+              ? "Nightmare"
               : "UNKNOWN"}{" "}
             Mode
           </Typography>
@@ -172,19 +163,34 @@ const Game = () => {
             turnOfX={turnOfX}
           />
           <SquaresComp
+            gameModeProp={gameMode}
             sizeOfBoard={dict.sizeOfBoard}
             isGameEndProp={isGameEnd}
             handleClickFunc={clickOfCell}
             matrixValue={matrixXO}
             victoryOptProp={victoryOpt}
           />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleChangeModeClick}
+          <Box
+            sx={{
+              width: "100%",
+              mt: 5,
+              display: "flex",
+              justifyContent: "space-around",
+            }}
           >
-            Change Game Mode
-          </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleChangeModeClick}
+            >
+              Change Game Mode
+            </Button>
+            <Tooltip title="reset game">
+              <Button variant="contained" onClick={handleResetClick}>
+                <RestartAltIcon />
+              </Button>
+            </Tooltip>
+          </Box>
         </Box>
       ) : (
         <ModeMenu

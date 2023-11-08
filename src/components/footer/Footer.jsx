@@ -10,9 +10,7 @@ const { COLORS } = dict;
 const Footer = () => {
   const dispatch = useDispatch();
   const [bgColorState, setBgColorState] = useState(COLORS.BLACK);
-  const {
-    contactSlice: { pressed },
-  } = useSelector((bigRedux) => bigRedux);
+  const { pressed } = useSelector((bigRedux) => bigRedux.contactSlice);
   useEffect(() => {
     if (pressed) {
       setBgColorState(COLORS.WHITE);
