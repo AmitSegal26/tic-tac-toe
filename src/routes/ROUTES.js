@@ -1,5 +1,5 @@
 const ROUTES = {
-  HOME: "/home",
+  HOME: "/tic-tac-toe",
   REGISTER: "/register",
   GAME: "/gamepage",
   BOT: "/gamemodes",
