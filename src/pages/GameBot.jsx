@@ -1,5 +1,5 @@
-import { Box, Button, Container, Tooltip, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Container, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import SquaresComp from "../components/game/board/SquaresComp";
 import { randomBot } from "../bot/randomBot";
 import { checkIfWin } from "../functions/checkIfWin";
@@ -7,13 +7,15 @@ import GameIntro from "../components/game/GameIntro";
 import { handleReset } from "../functions/resetGameState";
 import smartBot from "../bot/smartBot";
 import smartestBot from "../bot/smartestBot";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { dict } from "../utils/dict";
 import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
 import ModeMenu from "../components/game/ModeMenu";
+import BoardWrapper from "../components/game/BoardWrapper";
+import scrollToBoard from "../functions/scrollToBoard";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
 const Game = () => {
+  const boardRef = useRef();
   const [gameMode, setGameMode] = useState(null);
   /*
    * 0 - random mode
@@ -37,6 +39,9 @@ const Game = () => {
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState(emptyBoardMatrix);
   const [start, setStart] = useState(false);
+  useEffect(() => {
+    scrollToBoard(boardRef);
+  }, [start]);
   useEffect(() => {
     if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       setIsGameEnd(true);
@@ -128,20 +133,11 @@ const Game = () => {
         rulesArr={rulesArr}
       />
       {start ? (
-        <Box
-          component="div"
-          sx={{
-            transition: "background-color 1s linear",
-            backgroundColor: isGameEnd ? dict.COLORS.TEXT1 : "",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "25px",
-            width: "fit-content",
-            height: "fit-content",
-            p: 5,
-          }}
+        <BoardWrapper
+          boardRef={boardRef}
+          isGameEndProp={isGameEnd}
+          handleResetClickFunc={handleResetClick}
+          handleChangeModeClickFunc={handleChangeModeClick}
         >
           <Typography
             sx={{ color: dict.COLORS.RED }}
@@ -170,28 +166,7 @@ const Game = () => {
             matrixValue={matrixXO}
             victoryOptProp={victoryOpt}
           />
-          <Box
-            sx={{
-              width: "100%",
-              mt: 5,
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleChangeModeClick}
-            >
-              Change Game Mode
-            </Button>
-            <Tooltip title="reset game">
-              <Button variant="contained" onClick={handleResetClick}>
-                <RestartAltIcon />
-              </Button>
-            </Tooltip>
-          </Box>
-        </Box>
+        </BoardWrapper>
       ) : (
         <ModeMenu
           setRandomModeFunc={setRandomMode}

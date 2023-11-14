@@ -1,15 +1,20 @@
-import { Box, Button, Container } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Container } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import SquaresComp from "../components/game/board/SquaresComp";
 import { checkIfWin } from "../functions/checkIfWin";
 import GameIntro from "../components/game/GameIntro";
 import { handleReset } from "../functions/resetGameState";
 import { dict } from "../utils/dict";
 import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
+import BoardWrapper from "../components/game/BoardWrapper";
+import ROUTES from "../routes/ROUTES";
+import { useNavigate } from "react-router-dom";
+import scrollToBoard from "../functions/scrollToBoard";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
 const Game = () => {
-  const [turnOfX, setTurnOfX] = useState(true);
+  const boardRef = useRef();
+  const navigate = useNavigate();
   const [isTie, setIsTie] = useState(false);
   const [victoryOpt, setVictoryOpt] = useState(0);
   /*
@@ -23,10 +28,15 @@ const Game = () => {
    *8- bottom-left to top-right diagonal line /
    */
   const [isGameEnd, setIsGameEnd] = useState(false);
+  const [turnOfX, setTurnOfX] = useState(false);
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState(emptyBoardMatrix);
   const [start, setStart] = useState(false);
   useEffect(() => {
+    scrollToBoard(boardRef);
+  }, [start]);
+  useEffect(() => {
+    setTurnOfX(!turnOfX);
     if (checkIfWin(matrixXO, setVictoryOpt)) {
       setIsGameEnd(true);
     }
@@ -74,43 +84,36 @@ const Game = () => {
     }
     setIsTie(isLastMove);
     setMatrixXO(newMatrix);
-    setTurnOfX(!turnOfX);
   };
   const handleResetClick = () => {
-    handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
+    handleReset(
+      setMatrixXO,
+      setVictoryOpt,
+      setTurnOfX,
+      setIsGameEnd,
+      setIsTie,
+      turnOfX
+    );
+  };
+  const handleChangeMode = () => {
+    navigate(ROUTES.BOT);
   };
   return (
     <Container
       sx={{
         display: "flex",
         flexDirection: start ? { xs: "column", lg: "row" } : "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <GameIntro welcomeText="Welcome to the game!" rulesArr={rulesArr} />
-      {isGameEnd || isTie ? (
-        <Button
-          sx={{ p: 1, m: 2, height: "70px", alignSelf: "center" }}
-          variant="contained"
-          onClick={handleResetClick}
-        >
-          Reset game
-        </Button>
-      ) : (
-        ""
-      )}
       {start ? (
-        <Box
-          component="div"
-          sx={{
-            transition: "all 1s linear",
-            backgroundColor: isGameEnd ? "#1f1f1f" : "",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "25px",
-            m: 3,
-          }}
+        <BoardWrapper
+          boardRef={boardRef}
+          isGameEndProp={isGameEnd}
+          handleResetClickFunc={handleResetClick}
+          handleChangeModeClickFunc={handleChangeMode}
         >
           <TurnAndWinIndicator
             isTie={isTie}
@@ -124,7 +127,7 @@ const Game = () => {
             matrixValue={matrixXO}
             victoryOptProp={victoryOpt}
           />
-        </Box>
+        </BoardWrapper>
       ) : (
         <Button
           sx={{ p: 3, m: 2, fontSize: "2rem" }}

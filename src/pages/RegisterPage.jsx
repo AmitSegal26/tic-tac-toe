@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogTitle,
@@ -15,6 +16,8 @@ import { validateUser } from "../validations/userScheme";
 import RecommendIcon from "@mui/icons-material/Recommend";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 const { nameOfData } = dict;
 const { COLORS } = dict;
 
@@ -22,6 +25,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const [usersArr] = useState(JSON.parse(localStorage.getItem(nameOfData)));
   const [openDialog, setOpenDialog] = useState(false);
+  const [btnLoad, setBtnLoad] = useState(false);
   const [disableBtn, setDisableBtn] = useState(true);
   const [inputState, setInputState] = useState(new User("", "").getUser());
   const [inputError, setInputError] = useState([]);
@@ -32,6 +36,7 @@ const RegisterPage = () => {
     }
     //* debounce
     setDisableBtn(true);
+    setBtnLoad(true);
     const getData = setTimeout(() => {
       if (usersArr.find((user) => user.name === inputState.name)) {
         setIsExistUserName(true);
@@ -40,6 +45,7 @@ const RegisterPage = () => {
         setIsExistUserName(false);
         setDisableBtn(!!inputError);
       }
+      setBtnLoad(false);
     }, 500);
 
     return () => clearTimeout(getData);
@@ -198,6 +204,15 @@ const RegisterPage = () => {
         </Grid>
         <Grid item xs={12}>
           <Button
+            endIcon={
+              btnLoad ? (
+                <CircularProgress size="1rem" />
+              ) : isExistUserName || inputError ? (
+                <CloseOutlinedIcon />
+              ) : (
+                <DoneOutlineIcon />
+              )
+            }
             disabled={disableBtn}
             variant="contained"
             color="warning"
