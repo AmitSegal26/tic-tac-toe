@@ -9,6 +9,7 @@ const SquaresComp = ({
   victoryOptProp,
   sizeOfBoard,
   gameModeProp,
+  isBotThinking,
 }) => {
   const alternateSizeOfBoard = "250px";
   return (
@@ -33,6 +34,7 @@ const SquaresComp = ({
         {[undefined, undefined, undefined].map((item, i) => (
           <RowComp
             key={i}
+            isBotThinking={isBotThinking}
             handleClickFunc={handleClickFunc}
             i={i}
             matrixValue={matrixValue}

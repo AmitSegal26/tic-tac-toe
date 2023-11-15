@@ -11,6 +11,7 @@ const RowComp = ({
   isGameEndProp,
   victoryOptProp,
   gameModeProp,
+  isBotThinking,
 }) => {
   const rowStyleObj = {
     width: "100%",
@@ -81,7 +82,7 @@ const RowComp = ({
         <Box
           key={`${j}+${i}`}
           id={i * 3 + (j + 1)}
-          onClick={isGameEndProp ? () => {} : handleClickFunc}
+          onClick={isGameEndProp || isBotThinking ? () => {} : handleClickFunc}
           component="div"
           sx={{
             ...cellStyleObj,

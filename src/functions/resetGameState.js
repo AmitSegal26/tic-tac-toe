@@ -5,11 +5,13 @@ export const handleReset = (
   setVictoryOpt,
   setTurnOfX,
   setIsGameEnd,
-  setIsTie
+  setIsTie,
+  isBotPage = false
 ) => {
   setMatrixXO(emptyBoardMatrix);
   setVictoryOpt(0);
-  setTurnOfX(true);
+  // *setting turn to false (O) because of the useEffect that inverts the value of turnOfX (in Game.jsx)
+  setTurnOfX(isBotPage ? true : false);
   setIsGameEnd(false);
   setIsTie(false);
 };

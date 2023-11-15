@@ -8,12 +8,12 @@ import { handleReset } from "../functions/resetGameState";
 import smartBot from "../bot/smartBot";
 import smartestBot from "../bot/smartestBot";
 import { dict } from "../utils/dict";
-import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
 import ModeMenu from "../components/game/ModeMenu";
 import BoardWrapper from "../components/game/BoardWrapper";
 import scrollToBoard from "../functions/scrollToBoard";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
+const delayOfBot = 500;
 const Game = () => {
   const boardRef = useRef();
   const [gameMode, setGameMode] = useState(null);
@@ -36,6 +36,7 @@ const Game = () => {
    *8- bottom-left to top-right diagonal line /
    */
   const [isGameEnd, setIsGameEnd] = useState(false);
+  const [botThinking, setBotThinking] = useState(false);
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState(emptyBoardMatrix);
   const [start, setStart] = useState(false);
@@ -48,6 +49,13 @@ const Game = () => {
       return;
     }
   }, [matrixXO, turnOfX, isTie]);
+  useEffect(() => {
+    if (botThinking) {
+      setTimeout(() => {
+        setBotThinking(false);
+      }, delayOfBot);
+    }
+  }, [botThinking]);
   const rulesArr = [
     "The game is played agains a bot, each turn the bot puts his mark in a random cell",
     "Each player has his turn to choose, 1 choice for each player for each turn",
@@ -55,6 +63,7 @@ const Game = () => {
     "The goal can be as a row, a column or even a diagonal line",
   ];
   const clickOfCell = (e) => {
+    setBotThinking(true);
     if (!e) {
       return;
     }
@@ -88,19 +97,30 @@ const Game = () => {
       }
     }
     setIsTie(isLastMove);
-    setMatrixXO(
-      isLastMove
-        ? newMatrix
-        : gameMode === 2
-        ? smartestBot(newMatrix)
-        : gameMode === 1
-        ? smartBot(newMatrix)
-        : randomBot(newMatrix)
-    );
-    setTurnOfX(!turnOfX);
+    setMatrixXO(newMatrix);
+    setTimeout(() => {
+      if (!checkIfWin(newMatrix, () => {}))
+        setMatrixXO(
+          isLastMove
+            ? newMatrix
+            : gameMode === 2
+            ? smartestBot(newMatrix)
+            : gameMode === 1
+            ? smartBot(newMatrix)
+            : randomBot(newMatrix)
+        );
+      setTurnOfX(!turnOfX);
+    }, delayOfBot);
   };
   const handleResetClick = () => {
-    handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
+    handleReset(
+      setMatrixXO,
+      setVictoryOpt,
+      setTurnOfX,
+      setIsGameEnd,
+      setIsTie,
+      true
+    );
   };
   const setRandomMode = () => {
     setGameMode(0);
@@ -153,12 +173,17 @@ const Game = () => {
               : "UNKNOWN"}{" "}
             Mode
           </Typography>
-          <TurnAndWinIndicator
-            isTie={isTie}
-            isGameEnd={isGameEnd}
-            turnOfX={turnOfX}
-          />
+          {/* <SquaresComp
+            isBotThinking={botThinking}
+            gameModeProp={gameMode}
+            sizeOfBoard={dict.sizeOfBoard}
+            isGameEndProp={isGameEnd}
+            handleClickFunc={clickOfCell}
+            matrixValue={matrixXO}
+            victoryOptProp={victoryOpt}
+          /> */}
           <SquaresComp
+            isBotThinking={botThinking}
             gameModeProp={gameMode}
             sizeOfBoard={dict.sizeOfBoard}
             isGameEndProp={isGameEnd}

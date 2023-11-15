@@ -34,6 +34,7 @@ const Game = () => {
   const [start, setStart] = useState(false);
   useEffect(() => {
     scrollToBoard(boardRef);
+    setTurnOfX(true);
   }, [start]);
   useEffect(() => {
     setTurnOfX(!turnOfX);
@@ -86,14 +87,7 @@ const Game = () => {
     setMatrixXO(newMatrix);
   };
   const handleResetClick = () => {
-    handleReset(
-      setMatrixXO,
-      setVictoryOpt,
-      setTurnOfX,
-      setIsGameEnd,
-      setIsTie,
-      turnOfX
-    );
+    handleReset(setMatrixXO, setVictoryOpt, setTurnOfX, setIsGameEnd, setIsTie);
   };
   const handleChangeMode = () => {
     navigate(ROUTES.BOT);
