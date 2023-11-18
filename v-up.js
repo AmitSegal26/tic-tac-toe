@@ -6,7 +6,7 @@ let pkgVerArr = pkg.version.split(".");
 pkgVerArr[1] = +pkgVerArr[1] + 1;
 const newFinalArr = pkgVerArr.join(",");
 pkg.version = newFinalArr.replaceAll(",", ".");
-fs.writeFile("package.json.json", JSON.stringify(pkg), (err) => {
+fs.writeFile("package.json", JSON.stringify(pkg), (err) => {
   if (err) throw err;
   console.log(chalk.bgCyan.red("version has been rewritten"));
 });
