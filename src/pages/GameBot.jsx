@@ -11,6 +11,7 @@ import { dict } from "../utils/dict";
 import ModeMenu from "../components/game/ModeMenu";
 import BoardWrapper from "../components/game/BoardWrapper";
 import scrollToBoard from "../functions/scrollToBoard";
+import TurnAndWinIndicator from "./../components/game/TurnAndWinIndicator";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
 const delayOfBot = 500;
@@ -98,8 +99,9 @@ const Game = () => {
     }
     setIsTie(isLastMove);
     setMatrixXO(newMatrix);
+    setTurnOfX(false);
     setTimeout(() => {
-      if (!checkIfWin(newMatrix, () => {}))
+      if (!checkIfWin(newMatrix, () => {})) {
         setMatrixXO(
           isLastMove
             ? newMatrix
@@ -109,7 +111,8 @@ const Game = () => {
             ? smartBot(newMatrix)
             : randomBot(newMatrix)
         );
-      setTurnOfX(!turnOfX);
+        setTurnOfX(true);
+      }
     }, delayOfBot);
   };
   const handleResetClick = () => {
@@ -173,15 +176,11 @@ const Game = () => {
               : "UNKNOWN"}{" "}
             Mode
           </Typography>
-          {/* <SquaresComp
-            isBotThinking={botThinking}
-            gameModeProp={gameMode}
-            sizeOfBoard={dict.sizeOfBoard}
-            isGameEndProp={isGameEnd}
-            handleClickFunc={clickOfCell}
-            matrixValue={matrixXO}
-            victoryOptProp={victoryOpt}
-          /> */}
+          <TurnAndWinIndicator
+            turnOfX={turnOfX}
+            isGameEnd={isGameEnd}
+            isTie={isTie}
+          />
           <SquaresComp
             isBotThinking={botThinking}
             gameModeProp={gameMode}

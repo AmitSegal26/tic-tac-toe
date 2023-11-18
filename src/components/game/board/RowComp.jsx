@@ -23,12 +23,13 @@ const RowComp = ({
     height: "100%",
     border: "3px solid black",
     transition: "all 0.1s linear",
-    cursor: isGameEndProp ? "default" : "pointer",
+    cursor: isGameEndProp || isBotThinking ? "default" : "pointer",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     fontSize: "3em",
-    ":hover": isGameEndProp ? "" : { backgroundColor: COLORS.WHITE },
+    ":hover":
+      isGameEndProp || isBotThinking ? "" : { backgroundColor: COLORS.WHITE },
   };
   const valueStyleObj = {
     fontWeight: "bold",
