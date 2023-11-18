@@ -95,7 +95,8 @@ const LandingPage = () => {
       {/* banner */}
       <Box component="div" className="banner">
         <Typography gutterBottom component="h1" sx={{ fontFamily: "manrope" }}>
-          Welcome to Tic-Tac-Toe
+          Welcome to <br />
+          Tic-Tac-Toe
         </Typography>
       </Box>
       {/* menu */}

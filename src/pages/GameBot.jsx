@@ -101,7 +101,6 @@ const Game = () => {
         }
       }
     }
-    // setIsTie(isLastMove);
     setIsLastMove(isLastMove);
     setMatrixXO(newMatrix);
     setTurnOfX(false);
@@ -130,7 +129,6 @@ const Game = () => {
       true
     );
   };
-  // !change handleReset with setIsLastMove and setIsTie
   const setRandomMode = () => {
     setGameMode(0);
     setStart(true);
@@ -183,6 +181,8 @@ const Game = () => {
             Mode
           </Typography>
           <TurnAndWinIndicator
+            gameMode={gameMode}
+            botThinking={botThinking}
             turnOfX={turnOfX}
             isGameEnd={isGameEnd}
             isTie={isTie}

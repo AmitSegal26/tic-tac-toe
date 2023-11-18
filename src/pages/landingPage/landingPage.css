@@ -17,8 +17,7 @@
   content: "";
   width: 100%;
   position: absolute;
-  /* background-image: url(../../assets/imgs/banner.jpg); */
-  background-image: url(../../assets/imgs/banner2.jpg);
+  background-image: url(../../assets/imgs/banner.jpg);
   background-position: center;
   background-size: auto;
   height: 100%;

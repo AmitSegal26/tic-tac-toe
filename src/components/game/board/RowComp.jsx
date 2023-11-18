@@ -1,7 +1,8 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import React from "react";
 import { dict } from "../../../utils/dict";
-import imgOfBot from "../../../assets/imgs/bot-expressions/bot-mad.bmp";
+// import imgOfBot from "../../../assets/imgs/bot-expressions/bot-mad.bmp";
+import imgOfBot from "../../../assets/imgs/bot-expressions/new-robot-sign.png";
 const { COLORS } = dict;
 const { SIGNS } = dict;
 const RowComp = ({
