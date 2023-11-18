@@ -1,24 +1,28 @@
 {
   "files": {
-    "main.css": "/tic-tac-toe/static/css/main.1b0f4800.css",
-    "main.js": "/tic-tac-toe/static/js/main.2123a7d1.js",
+    "main.css": "/tic-tac-toe/static/css/main.92d0059f.css",
+    "main.js": "/tic-tac-toe/static/js/main.340297e9.js",
     "static/js/787.393238a3.chunk.js": "/tic-tac-toe/static/js/787.393238a3.chunk.js",
     "static/media/page-under-construction.jpeg": "/tic-tac-toe/static/media/page-under-construction.ddfd23e693537021437b.jpeg",
     "static/media/welcome.jpg": "/tic-tac-toe/static/media/welcome.99f0198764a3b55f37f9.jpg",
-    "static/media/bot-mad.bmp": "/tic-tac-toe/static/media/bot-mad.5bd07aeeea75c6eb373f.bmp",
     "static/media/tic-tac-toe-local.jpeg": "/tic-tac-toe/static/media/tic-tac-toe-local.f8c25ecf4ccc36d2821c.jpeg",
     "static/media/online-game.jpeg": "/tic-tac-toe/static/media/online-game.00b5877a9c9b4f26cb31.jpeg",
     "static/media/bot-game.png": "/tic-tac-toe/static/media/bot-game.b9c0abde2de3b9b86300.png",
     "static/media/Picture1.png": "/tic-tac-toe/static/media/Picture1.fdffe1d9eea640b13d2b.png",
-    "static/media/banner2.jpg": "/tic-tac-toe/static/media/banner2.8b700158d9540fbcdfeb.jpg",
+    "static/media/banner.jpg": "/tic-tac-toe/static/media/banner.8b700158d9540fbcdfeb.jpg",
     "static/media/logoTransparent.png": "/tic-tac-toe/static/media/logoTransparent.73397d7a51a5880e5bcb.png",
+    "static/media/new-robot-sign.png": "/tic-tac-toe/static/media/new-robot-sign.bea554c909982e8e3143.png",
+    "static/media/robot-look-down.png": "/tic-tac-toe/static/media/robot-look-down.aa96d30710049351f18e.png",
+    "static/media/robot-lose.png": "/tic-tac-toe/static/media/robot-lose.37da95a4b10ba26cb67c.png",
+    "static/media/robot-win.png": "/tic-tac-toe/static/media/robot-win.78cea97e48136f2e43c3.png",
+    "static/media/robot-tie.png": "/tic-tac-toe/static/media/robot-tie.fd5ed03096f5a66034e1.png",
     "index.html": "/tic-tac-toe/index.html",
-    "main.1b0f4800.css.map": "/tic-tac-toe/static/css/main.1b0f4800.css.map",
-    "main.2123a7d1.js.map": "/tic-tac-toe/static/js/main.2123a7d1.js.map",
+    "main.92d0059f.css.map": "/tic-tac-toe/static/css/main.92d0059f.css.map",
+    "main.340297e9.js.map": "/tic-tac-toe/static/js/main.340297e9.js.map",
     "787.393238a3.chunk.js.map": "/tic-tac-toe/static/js/787.393238a3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1b0f4800.css",
-    "static/js/main.2123a7d1.js"
+    "static/css/main.92d0059f.css",
+    "static/js/main.340297e9.js"
   ]
 }
