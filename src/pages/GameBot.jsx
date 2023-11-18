@@ -37,6 +37,7 @@ const Game = () => {
    *8- bottom-left to top-right diagonal line /
    */
   const [isGameEnd, setIsGameEnd] = useState(false);
+  const [isLastMove, setIsLastMove] = useState(false);
   const [botThinking, setBotThinking] = useState(false);
   //* true - is X, false - is O
   const [matrixXO, setMatrixXO] = useState(emptyBoardMatrix);
@@ -50,6 +51,9 @@ const Game = () => {
       return;
     }
   }, [matrixXO, turnOfX, isTie]);
+  useEffect(() => {
+    setIsTie(!checkIfWin(matrixXO, () => {}) && isLastMove);
+  }, [isLastMove]);
   useEffect(() => {
     if (botThinking) {
       setTimeout(() => {
@@ -97,7 +101,8 @@ const Game = () => {
         }
       }
     }
-    setIsTie(isLastMove);
+    // setIsTie(isLastMove);
+    setIsLastMove(isLastMove);
     setMatrixXO(newMatrix);
     setTurnOfX(false);
     setTimeout(() => {
@@ -125,6 +130,7 @@ const Game = () => {
       true
     );
   };
+  // !change handleReset with setIsLastMove and setIsTie
   const setRandomMode = () => {
     setGameMode(0);
     setStart(true);
