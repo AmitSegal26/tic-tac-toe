@@ -5,6 +5,7 @@ import IconComponentForFooter from "./IconComponentForFooter";
 import myImg from "../../assets/imgs/Picture1.png";
 import { useDispatch, useSelector } from "react-redux";
 import { pressedOff } from "../../store/contactSlice";
+import pkg from "../../../package.json";
 const { COLORS } = dict;
 
 const Footer = () => {
@@ -105,6 +106,7 @@ const Footer = () => {
           <IconComponentForFooter key={linkObj.type} linkObjProp={linkObj} />
         ))}
       </Box>
+      <Box sx={{ color: COLORS.BOARDBG }}>v {pkg.version}</Box>
     </Box>
   );
 };
