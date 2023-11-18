@@ -17,7 +17,7 @@ const TurnAndWinIndicator = ({
 }) => {
   const botResponses = {
     botDefault: { src: botFaceResting, alt: "resting face of the bot" },
-    botFaceThinking: { src: botFaceResting, alt: "thinking bot" },
+    botFaceThinking: { src: botFaceThinking, alt: "thinking bot" },
     botFaceTie: { src: botFaceTie, alt: "face of the bot representing a tie" },
     botFaceWin: {
       src: botFaceWin,
@@ -28,10 +28,10 @@ const TurnAndWinIndicator = ({
       alt: "face of the bot representing a loss of the bot",
     },
   };
-  const getSimpleH4Element = (tieOrTurn, Ownership, victoryTurn) =>
-    tieOrTurn + Ownership + " " + victoryTurn;
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
       <Typography
         component="h4"
         variant="h4"
@@ -53,6 +53,7 @@ const TurnAndWinIndicator = ({
       </Typography>
       {gameMode === 1 ? (
         <Box
+          sx={{ width: "25%" }}
           component="img"
           src={
             botThinking
