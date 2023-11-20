@@ -13,6 +13,7 @@ const RowComp = ({
   victoryOptProp,
   gameModeProp,
   isBotThinking,
+  variation,
 }) => {
   const rowStyleObj = {
     width: "100%",
@@ -91,17 +92,21 @@ const RowComp = ({
             backgroundColor: setBgColorOfWin(COLORS.RED, j),
           }}
         >
-          {gameModeProp === 1 && matrixValue[i][j].value === SIGNS.O ? (
-            <Avatar src={imgOfBot} sx={{ width: "80%", height: "80%" }} />
+          {variation !== 100 ? (
+            gameModeProp === 1 && matrixValue[i][j].value === SIGNS.O ? (
+              <Avatar src={imgOfBot} sx={{ width: "80%", height: "80%" }} />
+            ) : (
+              <Typography
+                sx={{
+                  ...valueStyleObj,
+                  color: setTextColorOfWin("white", j),
+                }}
+              >
+                {matrixValue[i][j].value}
+              </Typography>
+            )
           ) : (
-            <Typography
-              sx={{
-                ...valueStyleObj,
-                color: setTextColorOfWin("white", j),
-              }}
-            >
-              {matrixValue[i][j].value}
-            </Typography>
+            ""
           )}
         </Box>
       ))}

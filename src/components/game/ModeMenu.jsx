@@ -15,7 +15,7 @@ const ModeMenu = ({
     p: 0.5,
     m: 0.5,
     fontSize: mediaQ ? "1rem" : "2rem",
-    borderRadius: "50px",
+    borderRadius: "25px",
   };
   return (
     <Box
@@ -37,7 +37,6 @@ const ModeMenu = ({
         color="warning"
         variant="contained"
         onClick={setSmartModeFunc}
-        // disabled
       >
         START Hard Mode
       </Button>

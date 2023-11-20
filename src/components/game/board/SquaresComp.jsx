@@ -10,6 +10,7 @@ const SquaresComp = ({
   sizeOfBoard,
   gameModeProp,
   isBotThinking,
+  variation,
 }) => {
   const alternateSizeOfBoard = "250px";
   return (
@@ -33,6 +34,7 @@ const SquaresComp = ({
       >
         {[undefined, undefined, undefined].map((item, i) => (
           <RowComp
+            variation={variation}
             key={i}
             isBotThinking={isBotThinking}
             handleClickFunc={handleClickFunc}

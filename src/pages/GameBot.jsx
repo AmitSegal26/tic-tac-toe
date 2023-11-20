@@ -1,6 +1,5 @@
 import { Container, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import SquaresComp from "../components/game/board/SquaresComp";
 import { randomBot } from "../bot/randomBot";
 import { checkIfWin } from "../functions/checkIfWin";
 import GameIntro from "../components/game/GameIntro";
@@ -11,12 +10,12 @@ import { dict } from "../utils/dict";
 import ModeMenu from "../components/game/ModeMenu";
 import BoardWrapper from "../components/game/BoardWrapper";
 import scrollToBoard from "../functions/scrollToBoard";
-import TurnAndWinIndicator from "./../components/game/TurnAndWinIndicator";
+import { getRandomIntIn } from "../service/getRandomIntInlusive";
 const { SIGNS } = dict;
 const { emptyBoardMatrix } = dict;
-const delayOfBot = 500;
 const Game = () => {
   const boardRef = useRef();
+  const [delayOfBot, setDelayOfBot] = useState(getRandomIntIn(500, 1500));
   const [gameMode, setGameMode] = useState(null);
   /*
    * 0 - random mode
@@ -46,6 +45,7 @@ const Game = () => {
     scrollToBoard(boardRef);
   }, [start]);
   useEffect(() => {
+    setDelayOfBot(getRandomIntIn(200, 1500));
     if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       setIsGameEnd(true);
       return;
@@ -62,7 +62,7 @@ const Game = () => {
     }
   }, [botThinking]);
   const rulesArr = [
-    "The game is played agains a bot, each turn the bot puts his mark in a random cell",
+    "The game is played against a bot, each turn the bot puts his mark in a random cell",
     "Each player has his turn to choose, 1 choice for each player for each turn",
     'Once a player has chosen his spot, the turn passes to the next player and there are no "go-backs"!',
     "The goal can be as a row, a column or even a diagonal line",
@@ -165,6 +165,13 @@ const Game = () => {
           isGameEndProp={isGameEnd}
           handleResetClickFunc={handleResetClick}
           handleChangeModeClickFunc={handleChangeModeClick}
+          handleClickFunc={clickOfCell}
+          matrixValue={matrixXO}
+          victoryOptProp={victoryOpt}
+          isTie={isTie}
+          turnOfX={turnOfX}
+          gameModeProp={gameMode}
+          isBotThinking={botThinking}
         >
           <Typography
             sx={{ color: dict.COLORS.RED }}
@@ -180,22 +187,6 @@ const Game = () => {
               : "UNKNOWN"}{" "}
             Mode
           </Typography>
-          <TurnAndWinIndicator
-            gameMode={gameMode}
-            botThinking={botThinking}
-            turnOfX={turnOfX}
-            isGameEnd={isGameEnd}
-            isTie={isTie}
-          />
-          <SquaresComp
-            isBotThinking={botThinking}
-            gameModeProp={gameMode}
-            sizeOfBoard={dict.sizeOfBoard}
-            isGameEndProp={isGameEnd}
-            handleClickFunc={clickOfCell}
-            matrixValue={matrixXO}
-            victoryOptProp={victoryOpt}
-          />
         </BoardWrapper>
       ) : (
         <ModeMenu

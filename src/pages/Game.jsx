@@ -1,11 +1,9 @@
 import { Button, Container } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import SquaresComp from "../components/game/board/SquaresComp";
 import { checkIfWin } from "../functions/checkIfWin";
 import GameIntro from "../components/game/GameIntro";
 import { handleReset } from "../functions/resetGameState";
 import { dict } from "../utils/dict";
-import TurnAndWinIndicator from "../components/game/TurnAndWinIndicator";
 import BoardWrapper from "../components/game/BoardWrapper";
 import ROUTES from "../routes/ROUTES";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +14,7 @@ const Game = () => {
   const boardRef = useRef();
   const navigate = useNavigate();
   const [isTie, setIsTie] = useState(false);
+  const [isLastMove, setIsLastMove] = useState(false);
   const [victoryOpt, setVictoryOpt] = useState(0);
   /*
    *1- top row
@@ -38,10 +37,13 @@ const Game = () => {
   }, [start]);
   useEffect(() => {
     setTurnOfX(!turnOfX);
-    if (checkIfWin(matrixXO, setVictoryOpt)) {
+    if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       setIsGameEnd(true);
     }
-  }, [matrixXO]);
+  }, [matrixXO, isTie]);
+  useEffect(() => {
+    setIsTie(!checkIfWin(matrixXO, () => {}) && isLastMove);
+  }, [isLastMove]);
   const rulesArr = [
     "Each player has his turn to choose, 1 choice for each player for each turn",
     'Once a player has chosen his spot, the turn passes to the next player and there are no "go-backs"!',
@@ -83,7 +85,7 @@ const Game = () => {
         }
       }
     }
-    setIsTie(isLastMove);
+    setIsLastMove(isLastMove);
     setMatrixXO(newMatrix);
   };
   const handleResetClick = () => {
@@ -108,20 +110,12 @@ const Game = () => {
           isGameEndProp={isGameEnd}
           handleResetClickFunc={handleResetClick}
           handleChangeModeClickFunc={handleChangeMode}
-        >
-          <TurnAndWinIndicator
-            isTie={isTie}
-            isGameEnd={isGameEnd}
-            turnOfX={turnOfX}
-          />
-          <SquaresComp
-            sizeOfBoard={dict.sizeOfBoard}
-            isGameEndProp={isGameEnd}
-            handleClickFunc={clickOfCell}
-            matrixValue={matrixXO}
-            victoryOptProp={victoryOpt}
-          />
-        </BoardWrapper>
+          handleClickFunc={clickOfCell}
+          matrixValue={matrixXO}
+          victoryOptProp={victoryOpt}
+          isTie={isTie}
+          turnOfX={turnOfX}
+        />
       ) : (
         <Button
           sx={{ p: 3, m: 2, fontSize: "2rem" }}
