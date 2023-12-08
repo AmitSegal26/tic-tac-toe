@@ -12,6 +12,22 @@ import { dict } from "../../utils/dict";
 import TurnAndWinIndicator from "./TurnAndWinIndicator";
 import SquaresComp from "./board/SquaresComp";
 
+const SliderMarkSpan = ({ children }) => {
+  return (
+    <Box
+      component="span"
+      sx={{
+        color: dict.COLORS.WHITE,
+        fontWeight: "bold",
+        letterSpacing: "0.1rem",
+        textShadow: `${dict.COLORS.BLACK} 0 0 5px`,
+        transition: "all 0.4s ease-in-out",
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 const BoardWrapper = ({
   boardRef,
   children,
@@ -30,6 +46,12 @@ const BoardWrapper = ({
   const mediaQ = useMediaQuery(theme.breakpoints.down("md"));
   const [variationState, setVariationState] = useState(0);
   const radiusOfBtn = { borderRadius: "50px" };
+  const handleVariationChange = (e) => {
+    if (!e) return;
+    if (!e.target) return;
+    const { value } = e.target;
+    setVariationState(value);
+  };
   return (
     <Box
       ref={boardRef}
@@ -38,6 +60,7 @@ const BoardWrapper = ({
         transition: "background-color 1s linear",
         backgroundColor: isGameEndProp ? dict.COLORS.TEXT1 : "",
         display: "flex",
+        gap: "2rem",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
@@ -51,29 +74,29 @@ const BoardWrapper = ({
         ""
       ) : (
         <Box sx={{ width: 300, height: 50 }}>
-          {variationState}
+          <SliderMarkSpan>
+            {variationState === 100
+              ? "Blind Mode"
+              : variationState === 50
+              ? "Dark Mode"
+              : "Normal Mode"}
+          </SliderMarkSpan>
           <Slider
-            orientation={mediaQ ? "vertical" : "horizontal"}
-            onChange={(e) => {
-              if (!e) return;
-              if (!e.target) return;
-              const { value } = e.target;
-              setVariationState(value);
-            }}
-            defaultValue={0}
+            onChange={handleVariationChange}
+            defaultValue={variationState}
             step={50}
             marks={[
               {
                 value: 0,
-                label: "Normal",
+                label: <SliderMarkSpan>Normal</SliderMarkSpan>,
               },
               {
                 value: 50,
-                label: "Dark Mode",
+                label: <SliderMarkSpan>Dark Mode</SliderMarkSpan>,
               },
               {
                 value: 100,
-                label: "Blind Mode",
+                label: <SliderMarkSpan>Blind Mode</SliderMarkSpan>,
               },
             ]}
           />
@@ -92,6 +115,7 @@ const BoardWrapper = ({
             botThinking={isBotThinking || false}
           />
           <SquaresComp
+            mediaQ={mediaQ}
             variation={variationState}
             isBotThinking={isBotThinking || false}
             gameModeProp={gameModeProp}
@@ -105,8 +129,9 @@ const BoardWrapper = ({
         {mediaQ ? (
           <Box sx={{ width: 50, height: 300 }}>
             <Slider
+              onChange={handleVariationChange}
               orientation={mediaQ ? "vertical" : "horizontal"}
-              defaultValue={0}
+              defaultValue={variationState}
               step={50}
               marks={[
                 {

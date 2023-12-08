@@ -1,7 +1,6 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import React from "react";
 import { dict } from "../../../utils/dict";
-// import imgOfBot from "../../../assets/imgs/bot-expressions/bot-mad.bmp";
 import imgOfBot from "../../../assets/imgs/bot-expressions/new-robot-sign.png";
 const { COLORS } = dict;
 const { SIGNS } = dict;
@@ -14,6 +13,7 @@ const RowComp = ({
   gameModeProp,
   isBotThinking,
   variation,
+  isPhoneModeFlash,
 }) => {
   const rowStyleObj = {
     width: "100%",
@@ -89,24 +89,25 @@ const RowComp = ({
           component="div"
           sx={{
             ...cellStyleObj,
-            backgroundColor: setBgColorOfWin(COLORS.RED, j),
+            backgroundColor:
+              isPhoneModeFlash && !isGameEndProp
+                ? COLORS.BOARDBG
+                : variation === 50 && !isGameEndProp
+                ? COLORS.TEXT2
+                : setBgColorOfWin(COLORS.RED, j),
           }}
         >
-          {variation !== 100 ? (
-            gameModeProp === 1 && matrixValue[i][j].value === SIGNS.O ? (
-              <Avatar src={imgOfBot} sx={{ width: "80%", height: "80%" }} />
-            ) : (
-              <Typography
-                sx={{
-                  ...valueStyleObj,
-                  color: setTextColorOfWin("white", j),
-                }}
-              >
-                {matrixValue[i][j].value}
-              </Typography>
-            )
+          {gameModeProp === 1 && matrixValue[i][j].value === SIGNS.O ? (
+            <Avatar src={imgOfBot} sx={{ width: "80%", height: "80%" }} />
           ) : (
-            ""
+            <Typography
+              sx={{
+                ...valueStyleObj,
+                color: setTextColorOfWin("white", j),
+              }}
+            >
+              {matrixValue[i][j].value}
+            </Typography>
           )}
         </Box>
       ))}

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RowComp from "./RowComp";
 
 const SquaresComp = ({
@@ -11,7 +11,24 @@ const SquaresComp = ({
   gameModeProp,
   isBotThinking,
   variation,
+  mediaQ,
 }) => {
+  const [isPhoneDarkModeBoardFlash, setIsPhoneDarkModeBoardFlash] =
+    useState(false);
+  useEffect(() => {
+    const flashBoardInterval = setInterval(() => {
+      setIsPhoneDarkModeBoardFlash(true);
+      setTimeout(() => {
+        setIsPhoneDarkModeBoardFlash(false);
+      }, 100);
+    }, 4000);
+    if (!(mediaQ && variation === 50)) {
+      clearInterval(flashBoardInterval);
+    }
+    return () => {
+      clearInterval(flashBoardInterval);
+    };
+  }, [mediaQ, variation]);
   const alternateSizeOfBoard = "250px";
   return (
     <Box
@@ -35,6 +52,7 @@ const SquaresComp = ({
         {[undefined, undefined, undefined].map((item, i) => (
           <RowComp
             variation={variation}
+            isPhoneModeFlash={isPhoneDarkModeBoardFlash}
             key={i}
             isBotThinking={isBotThinking}
             handleClickFunc={handleClickFunc}
