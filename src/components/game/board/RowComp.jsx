@@ -31,7 +31,9 @@ const RowComp = ({
     alignItems: "center",
     fontSize: "3em",
     ":hover":
-      isGameEndProp || isBotThinking ? "" : { backgroundColor: COLORS.WHITE },
+      isGameEndProp || isBotThinking || variation === 100
+        ? ""
+        : { backgroundColor: COLORS.WHITE },
   };
   const valueStyleObj = {
     fontWeight: "bold",
@@ -97,13 +99,17 @@ const RowComp = ({
                 : setBgColorOfWin(COLORS.RED, j),
           }}
         >
-          {gameModeProp === 1 && matrixValue[i][j].value === SIGNS.O ? (
+          {gameModeProp === 1 &&
+          variation === 0 &&
+          matrixValue[i][j].value === SIGNS.O ? (
             <Avatar src={imgOfBot} sx={{ width: "80%", height: "80%" }} />
           ) : (
             <Typography
               sx={{
                 ...valueStyleObj,
-                color: setTextColorOfWin("white", j),
+                color:
+                  (!isGameEndProp && variation === 100 && COLORS.BOARDBG) ||
+                  setTextColorOfWin("white", j),
               }}
             >
               {matrixValue[i][j].value}

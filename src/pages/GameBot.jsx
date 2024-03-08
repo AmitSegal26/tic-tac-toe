@@ -47,6 +47,8 @@ const Game = () => {
   useEffect(() => {
     setDelayOfBot(getRandomIntIn(200, 1500));
     if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
+      //? who won? (false- x, true - o)
+      console.log(`winner: ${!!!turnOfX ? "X" : "O"}`);
       setIsGameEnd(true);
       return;
     }

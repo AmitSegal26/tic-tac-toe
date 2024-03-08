@@ -83,7 +83,8 @@ const BoardWrapper = ({
           </SliderMarkSpan>
           <Slider
             onChange={handleVariationChange}
-            defaultValue={variationState}
+            defaultValue={0}
+            value={variationState}
             step={50}
             marks={[
               {
@@ -131,7 +132,8 @@ const BoardWrapper = ({
             <Slider
               onChange={handleVariationChange}
               orientation={mediaQ ? "vertical" : "horizontal"}
-              defaultValue={variationState}
+              defaultValue={0}
+              value={variationState}
               step={50}
               marks={[
                 {
