@@ -1,9 +1,10 @@
-const setObjectOfAchievement = (description, complete = false) =>
+const setObjectOfAchievement = (
+  name = "Achievement",
+  description,
+  complete = false
+) =>
   typeof description === "string" &&
-  description !== "" && {
-    description,
-    complete,
-  };
+  description !== "" && { name, description, complete };
 
 export const dict = {
   sizeOfBoard: "400px",
@@ -40,13 +41,30 @@ export const dict = {
   },
   nameOfData: "usersOfTicTacToe",
   achievements: {
-    createAnAccount: setObjectOfAchievement("Create your first account!", true),
-    playFirstGameEver: setObjectOfAchievement("Play your first game ever!"),
+    createAnAccount: setObjectOfAchievement(
+      "Welcome!",
+      "Create your first account!",
+      true
+    ),
+    playFirstGameEver: setObjectOfAchievement(
+      "Easy does it",
+      "Play your first game ever!"
+    ),
     playFirstGameAgainsBot: setObjectOfAchievement(
+      "Bot Challenger",
       "Play your first game ever against a bot!"
     ),
-    winRandom5: setObjectOfAchievement("Beat 'Normal Mode' 5 times in a row"),
-    winRandom10: setObjectOfAchievement("Beat 'Normal Mode' 10 times in a row"),
-    winSmart10: setObjectOfAchievement("Beat 'Hard Mode' 10 times in a row"),
+    winRandom5: setObjectOfAchievement(
+      "Low 5's",
+      "Beat 'Normal Mode' 5 times in a row"
+    ),
+    winRandom10: setObjectOfAchievement(
+      "First 10's",
+      "Beat 'Normal Mode' 10 times in a row"
+    ),
+    winSmart10: setObjectOfAchievement(
+      "Hard Mode Hero",
+      "Beat 'Hard Mode' 10 times in a row"
+    ),
   },
 };

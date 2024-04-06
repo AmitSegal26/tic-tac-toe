@@ -12,15 +12,23 @@ import { dict } from "../../utils/dict";
 import TurnAndWinIndicator from "./TurnAndWinIndicator";
 import SquaresComp from "./board/SquaresComp";
 
-const SliderMarkSpan = ({ children }) => {
+const SliderMarkSpan = ({ children, variation }) => {
   return (
     <Box
       component="span"
       sx={{
-        color: dict.COLORS.WHITE,
+        color:
+          variation === 100
+            ? dict.COLORS.BOARDBG
+            : variation === 50
+            ? dict.COLORS.BLACK
+            : dict.COLORS.WHITE,
+        fontSize: "1.2rem",
         fontWeight: "bold",
         letterSpacing: "0.1rem",
-        textShadow: `${dict.COLORS.BLACK} 0 0 5px`,
+        textShadow: `${dict.COLORS.BLACK} 0 0 ${
+          variation === 100 ? "1px" : "5px"
+        }`,
         transition: "all 0.4s ease-in-out",
       }}
     >
@@ -51,6 +59,8 @@ const BoardWrapper = ({
     if (!e.target) return;
     const { value } = e.target;
     setVariationState(value);
+    handleResetClickFunc();
+    //* resets the game each time you change the variation
   };
   return (
     <Box
@@ -74,14 +84,15 @@ const BoardWrapper = ({
         ""
       ) : (
         <Box sx={{ width: 300, height: 50 }}>
-          <SliderMarkSpan>
+          <SliderMarkSpan variation={variationState}>
             {variationState === 100
-              ? "Blind Mode"
+              ? "Blind"
               : variationState === 50
-              ? "Dark Mode"
-              : "Normal Mode"}
+              ? "Dark"
+              : "Normal"}
           </SliderMarkSpan>
           <Slider
+            disabled={isBotThinking}
             onChange={handleVariationChange}
             defaultValue={0}
             value={variationState}
@@ -93,11 +104,23 @@ const BoardWrapper = ({
               },
               {
                 value: 50,
-                label: <SliderMarkSpan>Dark Mode</SliderMarkSpan>,
+                label: (
+                  <SliderMarkSpan
+                    variation={variationState === 50 ? variationState : ""}
+                  >
+                    Dark Mode
+                  </SliderMarkSpan>
+                ),
               },
               {
                 value: 100,
-                label: <SliderMarkSpan>Blind Mode</SliderMarkSpan>,
+                label: (
+                  <SliderMarkSpan
+                    variation={variationState === 100 ? variationState : ""}
+                  >
+                    Blind Mode
+                  </SliderMarkSpan>
+                ),
               },
             ]}
           />

@@ -31,9 +31,7 @@ const RowComp = ({
     alignItems: "center",
     fontSize: "3em",
     ":hover":
-      isGameEndProp || isBotThinking || variation === 100
-        ? ""
-        : { backgroundColor: COLORS.WHITE },
+      isGameEndProp || isBotThinking ? "" : { backgroundColor: COLORS.WHITE },
   };
   const valueStyleObj = {
     fontWeight: "bold",
@@ -87,7 +85,11 @@ const RowComp = ({
         <Box
           key={`${j}+${i}`}
           id={i * 3 + (j + 1)}
-          onClick={isGameEndProp || isBotThinking ? () => {} : handleClickFunc}
+          onClick={
+            matrixValue[i][j].value || isGameEndProp || isBotThinking
+              ? () => {}
+              : handleClickFunc
+          }
           component="div"
           sx={{
             ...cellStyleObj,
@@ -96,6 +98,10 @@ const RowComp = ({
                 ? COLORS.BOARDBG
                 : variation === 50 && !isGameEndProp
                 ? COLORS.TEXT2
+                : variation === 100 &&
+                  !matrixValue[i][j].value &&
+                  !isGameEndProp
+                ? "#5E8C3A"
                 : setBgColorOfWin(COLORS.RED, j),
           }}
         >
@@ -107,12 +113,12 @@ const RowComp = ({
             <Typography
               sx={{
                 ...valueStyleObj,
-                color:
-                  (!isGameEndProp && variation === 100 && COLORS.BOARDBG) ||
-                  setTextColorOfWin("white", j),
+                color: setTextColorOfWin("white", j),
               }}
             >
-              {matrixValue[i][j].value}
+              {!isGameEndProp && variation === 100
+                ? ""
+                : matrixValue[i][j].value}
             </Typography>
           )}
         </Box>

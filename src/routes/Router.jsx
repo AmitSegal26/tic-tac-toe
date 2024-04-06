@@ -6,6 +6,7 @@ import GameRandom from "../pages/GameBot";
 import RegisterPage from "../pages/RegisterPage";
 import LandingPage from "../pages/landingPage/LandingPage";
 import Online from "../pages/Online";
+import About from "../pages/About/About";
 const MarginedContainer = ({ children }) => {
   return <div style={{ padding: "3rem" }}>{children}</div>;
 };
@@ -44,6 +45,7 @@ const Router = () => {
           </MarginedContainer>
         }
       />
+      <Route path={ROUTES.ABOUT} element={<About />} />
       <Route path={ROUTES.HOME} element={<LandingPage />} />
       <Route path={"*"} element={<Navigate to={ROUTES.HOME} />} />
     </Routes>

@@ -48,7 +48,9 @@ const Game = () => {
     setDelayOfBot(getRandomIntIn(200, 1500));
     if (checkIfWin(matrixXO, setVictoryOpt) || isTie) {
       //? who won? (false- x, true - o)
-      console.log(`winner: ${!!!turnOfX ? "X" : "O"}`);
+      console.log(
+        `winner: ${!!!turnOfX ? "X" : "O"}, TIE: ${isTie ? "yes" : "no"}`
+      );
       setIsGameEnd(true);
       return;
     }
@@ -89,7 +91,7 @@ const Game = () => {
     for (const cell of newMatrix[row]) {
       if (cell.value !== "" && cell.index === id) {
         //? is the cell already occupied
-        return;
+        // return;
       }
       if (cell.index === id) {
         newMatrix[row][newMatrix[row].indexOf(cell)].value = SIGNS.X;

@@ -10,6 +10,7 @@ import ROUTES from "../../routes/ROUTES";
 import { dict } from "./../../utils/dict";
 import { useDispatch } from "react-redux";
 import { pressedOn } from "../../store/contactSlice";
+import AboutAndHomeBtn from "../../components/AboutAndHomeBtn";
 import "./landingPage.css";
 
 const TYPES = [
@@ -107,6 +108,7 @@ const LandingPage = () => {
         columnSpacing={2}
         sx={{ p: 10 }}
       >
+        <AboutAndHomeBtn text="Where am I? 👆" />
         {TYPES.map((type) => (
           <Grid
             key={type.link}
